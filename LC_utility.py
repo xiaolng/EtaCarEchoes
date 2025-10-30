@@ -25,7 +25,7 @@ import glob
 
 from pdastro import *
 
-
+import pickle
 
 
 def diff(params, f_tmp, f_tmp_err, f_obs, f_obs_err):
@@ -181,6 +181,14 @@ def convert_Jy2mag(x_jy):
     # x_jy in micro-janskys
     mag = 23.9 - 2.5*np.log10(x_jy)
     return(np.round(mag, 2))
+
+def convert_Jy2mag(x_jy, x_jy_err=None):
+    # x_jy in micro-janskys
+    mag = 23.9 - 2.5*np.log10(x_jy)
+    if x_jy_err is not None:
+        mag_err = 1.0857 * ( x_jy_err / x_jy )
+        return mag, mag_err
+    return mag
 
 
 
