@@ -19,7 +19,11 @@ import astropy.units as u
 
 from scipy.interpolate import splev, splrep, interp1d
 import scipy.optimize as opt
-from scipy.signal import find_peaks
+from scipy.signal import find_peaks, medfilt
+
+# Gaussian process for curve fitting
+import george
+from george.kernels import ExpSquaredKernel
 
 import glob
 
@@ -38,8 +42,17 @@ def get_LCtable(url):
     return(df_table)
 
 
+def get_table_inds(table, group):
+    inds = []
+    for i in range(len(table)):
+        group_i = table['group'][i]
+        if group_i == group:
+            inds.append(i)
+    return(inds)
 
-def get_LCcurves(table, group=None, indices=None):
+
+
+def get_LCdata(table, group=None, indices=None):
     '''
     Read in txt files from html containing LC info
     '''
@@ -69,70 +82,147 @@ def get_LCcurves(table, group=None, indices=None):
     return(pd.concat(lc_list))
 
 
-
-def get_table_inds(table, group):
-    inds = []
-    for i in range(len(table)):
-        group_i = table['group'][i]
-        if group_i == group:
-            inds.append(i)
-            
-    return(inds)
+def readin_LCdf(filepath):
+    lc_data = pd.read_csv(filepath)
+    lc_df = pdastrostatsclass()
+    lc_df.t = lc_df.t.assign(**lc_data)
+    lc_df.t.reset_index(drop=True, inplace=True)
+    return(lc_df)
 
 
 
-def get_LCinds(df, lc_ID, n_sigmas=None, mJyas2_lms=None, bad_expnums=None):
+def get_LCbins(df, bin_size, by_mjd=False, indices=None):
+    '''
+    Get the bin indices for error-cut loop
+    '''
+    
+    bins_inds = []
+    bin_ts = []    
+
+    sort_inds = df.ix_sort_by_cols('mjd', indices=indices)
+    sort_inds = df.ix_not_null('mJyas2', indices=sort_inds)
+    
+    if by_mjd is False:
+        for i in range(0, len(sort_inds), bin_size):
+            if len(sort_inds) - (i+bin_size) < bin_size or len(sort_inds) - i < bin_size:    # if point is near end or at end of list
+                bins_inds.append(sort_inds[i:])
+                break
+            else:
+                bins_inds.append(sort_inds[i:i + bin_size])
+    
+    elif by_mjd is True:
+        t_range = np.arange(min(df.t.loc[sort_inds,'mjd']),max(df.t.loc[sort_inds,'mjd']),bin_size)
+        skip_inds = []
+        bin_ts = [t_range[0]]
+        for i in range(len(t_range)-1):
+            if i not in skip_inds:
+                lo_i = i
+                skip_inds.append(i)
+                up_i = i+1
+                bin_i = df.ix_inrange('mjd', lowlim=t_range[lo_i], uplim=t_range[up_i], indices=sort_inds)
+                while len(bin_i)<30 and up_i!=len(t_range)-1:
+                    skip_inds.append(up_i)
+                    up_i += 1
+                    bin_i = df.ix_inrange('mjd', lowlim=t_range[lo_i], uplim=t_range[up_i], indices=sort_inds)
+                    
+                bins_inds.append(bin_i)
+                bin_ts.append(t_range[up_i])
+
+    return(bins_inds, bin_ts)
+
+
+
+def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=None, by_mjd=False):
     """
-    Return the indices of the table of usable values
-
-    n_sigmas = [3.0, 1.0]  -- n times standard deviation away from median value of mJyas2, and its error
-    mJyas2_lms = [20.0,1.0] -- upperlimits for mJyas2, and its error
+    Return the indices of the table of usable values for a given LC position
+    # f_lm and ferr_lm is the upper limit of flux and its error in mJyas2 -- micro-Jansky / arcsec^2
     """
-
-    id_inds = np.where(df['ID'].eq(lc_ID))[0]
+    id_inds = np.where(df.t['ID'].eq(lc_ID))[0]
     
     if bad_expnums != None:
         working_inds = []
         for i in id_inds:
-            diff_nm = df.loc[i,'fitsfile']
+            diff_nm = df.t.loc[i,'fitsfile']
             expnum_se = re.search('\.(\d+)_ooi_',os.path.basename(diff_nm))
             expnum = float(expnum_se.groups()[0])
             if expnum not in bad_expnums:
                 working_inds.append(i)
     elif bad_expnums == None:
         working_inds = id_inds
+
+    if ferr_lm is not None:
+        working_inds = df.ix_inrange('mJyas2_err', uplim=ferr_lm, indices=working_inds)
+    if f_lm is not None:
+        working_inds = df.ix_inrange('mJyas2', uplim=f_lm, indices=working_inds)
+
+    if bin_size is None:
+        g_ixs = working_inds
+    # elif bin_size is not None:
+    #     bins, bints = get_LCbins(df, bin_size=bin_size, by_mjd=by_mjd, indices=working_inds)
+    #     g_ixs = []
+        
+    #     for i in range(len(bins)):
+    #         bin_i = bins[i]
+    #         df.calcaverage_sigmacutloop('mJyas2', indices=bin_i, noisecol='mJyas2_err', percentile_cut_firstiteration=70, Nsigma=3.0, verbose=0)
+    #         g_ixs.append(df.statparams['ix_good'])
+
+    #     g_ixs = np.concatenate(g_ixs)
+
+    # median_filter = medfilt(df.t.loc[working_inds,'mJyas2'])
+    # diff_med = abs(df.t.loc[working_inds,'mJyas2'] - median_filter)
+    # thresh_inds = np.where(diff_med < 2.0)[0]
+    # g_ixs = working_inds[thresh_inds]
+        
+    return(g_ixs)
+
+
+
+def flag_inds(df, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=None, by_mjd=False):
+    lc_ids = np.unique(df.t['ID'])
+    g_ixs = [get_LCinds(df, lc_ID=i, f_lm=f_lm, ferr_lm=ferr_lm, bad_expnums=bad_expnums, bin_size=bin_size, by_mjd=by_mjd) for i in lc_ids]
+
+    df.t['g_ixs_flag'] = False
     
-    f = df.loc[working_inds,'mJyas2']
-    ferr = df.loc[working_inds,'mJyas2_err']
-    med_f = np.nanmedian(f)
-    std_f = np.nanstd(f)
-    med_ferr = np.nanmedian(ferr)
-    std_ferr = np.nanstd(ferr)
+    for i in np.concatenate(g_ixs):
+        df.t.loc[i,'g_ixs_flag'] = True
 
-    if n_sigmas!=None:
-        n = n_sigmas[0]
-        nerr = n_sigmas[1]
-        inds = np.where((ferr < med_ferr + nerr*std_ferr) & (abs(f) < med_f + n*std_f))[0]
-    elif mJyas2_lms!=None:
-        f_lm = mJyas2_lms[0]
-        ferr_lm = mJyas2_lms[1]
-        inds = np.where((f < f_lm) & (ferr < ferr_lm))[0]
-    else:
-        inds = range(len(working_inds))
+    return('Updated LC dataframe -- flagged working indices')
         
-    return(np.array(working_inds)[np.array(inds)])
 
 
+def plot_lcs(df, lc_ID=None, plot_orig=False, plt_xl=None):
 
-def plot_lcs(df, n_sigmas=None, mJyas2_lms=None, bad_expnums=None, plt_xl=None):
-    lc_ids = np.unique(df['ID'])
-    for i in lc_ids:
-        print(i)
-        i_inds = np.where(df['ID'].eq(i))[0]
-        # plt.errorbar(df.loc[i_inds,'mjd'], df.loc[i_inds,'mJyas2'], yerr=df.loc[i_inds,'mJyas2_err'], fmt='o', ecolor='black', color='blue')
+    lc_ids = np.unique(df.t['ID'])
+    
+    if lc_ID is None:
+        for n, i in enumerate(lc_ids):
+            print(i)
+            
+            if plot_orig is True:
+                i_inds = np.where(df.t['ID'].eq(i))[0]
+                plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'mJyas2'], yerr=df.t.loc[i_inds,'mJyas2_err'], fmt='o', ecolor='black', color='blue')
+
+            inds_sig = np.where(df.t['ID'].eq(i) & df.t['g_ixs_flag'].eq(True))[0]
+            plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'mJyas2'], yerr=df.t.loc[inds_sig,'mJyas2_err'], fmt='o', ecolor='black', color='orange')
+            
+            plt.axhline(y=0, linestyle='--', color='black')
+    
+            if plt_xl is not None:
+                plt.axvline(x=plt_xl)
+    
+            plt.xlabel('MJD')
+            plt.ylabel('$\mu$Jy/as$^2$')
+            plt.show()
+            
+    elif lc_ID is not None:
+        print(lc_ID)
         
-        inds_sig = get_LCinds(df, lc_ID=i, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
-        plt.errorbar(df.loc[inds_sig,'mjd'], df.loc[inds_sig,'mJyas2'], yerr=df.loc[inds_sig,'mJyas2_err'], fmt='--o', ecolor='black', color='orange')
+        if plot_orig is True:
+            i_inds = np.where(df.t['ID'].eq(lc_ID))[0]
+            plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'mJyas2'], yerr=df.t.loc[i_inds,'mJyas2_err'], fmt='o', ecolor='black', color='blue')
+        
+        inds_sig = np.where(df.t['ID'].eq(lc_ID) & df.t['g_ixs_flag'].eq(True))[0]
+        plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'mJyas2'], yerr=df.t.loc[inds_sig,'mJyas2_err'], fmt='o', ecolor='black', color='orange')
         
         plt.axhline(y=0, linestyle='--', color='black')
 
@@ -141,10 +231,8 @@ def plot_lcs(df, n_sigmas=None, mJyas2_lms=None, bad_expnums=None, plt_xl=None):
 
         plt.xlabel('MJD')
         plt.ylabel('$\mu$Jy/as$^2$')
-        
-        plt.show()
 
-    return()
+    return('Done plotting')
 
 
 
@@ -158,30 +246,40 @@ def diff(params, f_tmp, f_tmp_err, f_obs, f_obs_err):
     return np.sum(chi2)
 
 
+def find_t_peak(t, f, ferr, t_range=None, metric=None):
 
-def find_t_peak(t, f, t_range=None):
+    if metric is not None:
+        kernel = ExpSquaredKernel(metric=metric)
+        gp = george.GP(kernel)
+        gp.compute(t, ferr)
+    
+        new_t = np.linspace(min(t), max(t), 5000)
+        mu, cov = gp.predict(f, new_t)
+        std = np.sqrt(np.diag(cov))
+    elif metric is None:
+        new_t = t
+        mu = f
+    
     if t_range is None:
-        t_peak = t[np.argmax(f)]
+        t_peak = new_t[np.argmax(mu)]
     else:
         t_min = t_range[0]
         t_max = t_range[1]
-        f = f[(t<t_max) & (t>t_min)]
-        t = t[(t<t_max) & (t>t_min)]
-        t_peak = t[np.argmax(f)]
+        new_mu = mu[(new_t<t_max) & (new_t>t_min)]
+        new_t2 = new_t[(new_t<t_max) & (new_t>t_min)]
+        t_peak = new_t2[np.argmax(new_mu)]
     
     return t_peak
 
 
-
-def find_t_shift(t1, f1, t2, f2, t_range=None):
-    t_peak1 = find_t_peak(t1, f1, t_range=t_range)
-    t_peak2 = find_t_peak(t2, f2, t_range=t_range)
+def find_t_shift(t1, f1, f1_err, t2, f2, f2_err, t_range=None, metric=None):
+    t_peak1 = find_t_peak(t1, f1, f1_err, t_range=t_range, metric=metric)
+    t_peak2 = find_t_peak(t2, f2, f2_err, t_range=t_range, metric=metric)
     
     return t_peak2 - t_peak1
 
 
-
-def get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=None, t_peaks=None, tshift_d=None):
+def get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=None, t_peaks=None, tshift_d=None, metric=None):
     """get optimized scale factor tshift, a, b
     t1, f1: template 
     t2, f2: f2_new = a * f2 + b
@@ -190,9 +288,9 @@ def get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=None, t_peak
     if tshift_d is None:
         if t_peaks is None:
             if t_range is None:
-                tshift = find_t_shift(t1, f1, t2, f2)
+                tshift = find_t_shift(t1, f1, f1_err, t2, f2, f2_err, metric=metric)
             elif t_range is not None:
-                tshift = find_t_shift(t1, f1, t2, f2, t_range=t_range)
+                tshift = find_t_shift(t1, f1, f1_err, t2, f2, f2_err, t_range=t_range, metric=metric)
         elif t_peaks is not None:
             tshift = t_peaks[1] - t_peaks[0]
     elif tshift_d is not None:
@@ -219,7 +317,7 @@ def get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=None, t_peak
 
 
 
-def fit_LCs(df, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_expnums=None, t_range=None, t_peaks=None, tshift_d=None, tshift_ls=None):
+def fit_LCs(df, templ_ID=0, LCmodel=None, t_range=None, t_peaks=None, tshift_d=None, tshift_ls=None, metric=None):
     '''
     Fit light curves to a template
     Template can be another individual LC -- default to fit to first in list
@@ -228,12 +326,10 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_ex
     
     # Template choice
     if LCmodel is None:
-        # id_grps = np.unique(df['ID'])
-        # temp_i = np.where(LCid_ls==templ_ID)[0][0]
-        g1_inds = get_LCinds(df, lc_ID=templ_ID, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
-        t1 = df.loc[g1_inds,'mjd'].values
-        f1 = df.loc[g1_inds,'mJyas2'].values
-        f1_err = df.loc[g1_inds,'mJyas2_err'].values
+        g1_inds = np.where((df.t['ID'].eq(templ_ID)) & (df.t['g_ixs_flag'].eq(True)))[0]
+        t1 = df.t.loc[g1_inds,'mjd'].values
+        f1 = df.t.loc[g1_inds,'mJyas2'].values
+        f1_err = df.t.loc[g1_inds,'mJyas2_err'].values
     elif LCmodel is not None:
         t1 = LCmodel['mjd'].values
         f1 = LCmodel['mJyas2'].values
@@ -244,12 +340,12 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_ex
     a_norms = []
     b_offsets = []
 
-    lc_ids = np.unique(df['ID'])
+    lc_ids = np.unique(df.t['ID'])
     for i, iid in enumerate(lc_ids):
-        g2_inds = get_LCinds(df, lc_ID=iid, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
-        t2 = df.loc[g2_inds,'mjd'].values
-        f2 = df.loc[g2_inds,'mJyas2'].values
-        f2_err = df.loc[g2_inds,'mJyas2_err'].values
+        g2_inds = np.where((df.t['ID'].eq(iid)) & (df.t['g_ixs_flag'].eq(True)))[0]
+        t2 = df.t.loc[g2_inds,'mjd'].values
+        f2 = df.t.loc[g2_inds,'mJyas2'].values
+        f2_err = df.t.loc[g2_inds,'mJyas2_err'].values
         
         if tshift_ls is not None:
             tshift_d = tshift_ls[i]
@@ -262,11 +358,11 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_ex
             t_pks = None
 
         if LCmodel is None:
-            tshift, a, b = get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=t_range, t_peaks=t_pks, tshift_d=tshift_d)
+            tshift, a, b = get_tshift_scale_offset(t1, f1, f1_err, t2, f2, f2_err, t_range=t_range, t_peaks=t_pks, tshift_d=tshift_d, metric=metric)
         elif LCmodel is not None:
             if t_peaks is not None:
                 t_pks = t_pks[::-1]
-            tshift, a, b = get_tshift_scale_offset(t2, f2, f2_err, t1, f1, f1_err, t_range=t_range, t_peaks=t_pks, tshift_d=tshift_d)
+            tshift, a, b = get_tshift_scale_offset(t2, f2, f2_err, t1, f1, f1_err, t_range=t_range, t_peaks=t_pks, tshift_d=tshift_d, metric=metric)
     
         tshifts.append(tshift)
         a_norms.append(a)
@@ -276,14 +372,14 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_ex
 
 
 
-def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_expnums=None):
+def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None):
     
     ## Template choice
     if LCmodel is None:
-        g1_inds = get_LCinds(df, lc_ID=templ_ID, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
-        t1 = df.loc[g1_inds,'mjd'].values
-        f1 = df.loc[g1_inds,'mJyas2'].values
-        f1_err = df.loc[g1_inds,'mJyas2_err'].values
+        g1_inds = np.where(df.t['ID'].eq(templ_ID) & df.t['g_ixs_flag'].eq(True))[0]
+        t1 = df.t.loc[g1_inds,'mjd'].values
+        f1 = df.t.loc[g1_inds,'mJyas2'].values
+        f1_err = df.t.loc[g1_inds,'mJyas2_err'].values
     elif LCmodel is not None:
         t1 = LCmodel['mjd'].values
         f1 = LCmodel['mJyas2'].values
@@ -294,13 +390,14 @@ def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_
     n_lcs = len(lc_ids)
     fig_l = int(np.round((n_lcs/5) + 0.49))
     fig, axs = plt.subplots(fig_l, 5, figsize=(20, fig_l*4))
+    # fig, axs = plt.subplots(fig_l, 5, figsize=(40, fig_l*8))
     axs = axs.flatten()
 
     for i, iid in enumerate(lc_ids):
-        g2_inds = get_LCinds(df, lc_ID=iid, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
-        t2 = df.loc[g2_inds,'mjd'].values
-        f2 = df.loc[g2_inds,'mJyas2'].values
-        f2_err = df.loc[g2_inds,'mJyas2_err'].values
+        g2_inds = np.where(df.t['ID'].eq(iid) & df.t['g_ixs_flag'].eq(True))[0]
+        t2 = df.t.loc[g2_inds,'mjd'].values
+        f2 = df.t.loc[g2_inds,'mJyas2'].values
+        f2_err = df.t.loc[g2_inds,'mJyas2_err'].values
 
         tshift =tshifts[i]
         a = a_norms[i]
@@ -313,17 +410,17 @@ def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None, n_sigmas=None, mJyas2_
         if LCmodel is None:
             ax.errorbar(t2-tshift, f2*a + b, alpha=.5, label='LC aligned', fmt='.-')
         elif LCmodel is not None:
-            ax.errorbar(t2+tshift, (f2 - b)/a, alpha=.5, label='LC aligned', fmt='.-')
-            # ax.errorbar(t1-tshift, f1*a + b, alpha=.5, label='Model aligned', fmt='.-')
+            # ax.errorbar(t2+tshift, (f2 - b)/a, alpha=.5, label='LC aligned', fmt='.-')
+            ax.errorbar(t1-tshift, f1*a + b, alpha=.5, label='Model aligned', fmt='.-', zorder=0)
             
         ax.legend()
         ax.set_title(f'ID={i}')
 
-    return()
+    return('Plotting LC fits')
 
 
 
-def get_alignedLCs(df, fit_params, LCmodel=None, n_sigmas=None, mJyas2_lms=None, bad_expnums=None):
+def get_combLCs(df, fit_params, LCmodel=None):
 
     new_t_ls = []
     new_f_ls = []
@@ -332,30 +429,29 @@ def get_alignedLCs(df, fit_params, LCmodel=None, n_sigmas=None, mJyas2_lms=None,
     lc_ids, tshifts, a_norms, b_offsets = fit_params
     
     for i, iid in enumerate(lc_ids):
-        i_inds = get_LCinds(df, lc_ID=iid, n_sigmas=n_sigmas, mJyas2_lms=mJyas2_lms, bad_expnums=bad_expnums)
+        g_inds = np.where(df.t['ID'].eq(iid) & df.t['g_ixs_flag'].eq(True))[0]
         
         tshift_i = tshifts[i]
         a_i = a_norms[i]
         b_i = b_offsets[i]
 
         # Define new values -- from fitting
-        # I may want to test whether I add to all data (not just subset)
         if LCmodel is None:
-            t_new = df['mjd'][i_inds] - tshift_i
-            f_new = a_i*df['mJyas2'][i_inds] + b_i
-            ferr_new = a_i*df['mJyas2_err'][i_inds]
+            t_new = df.t.loc[g_inds,'mjd'] - tshift_i
+            f_new = a_i*df.t.loc[g_inds,'mJyas2'] + b_i
+            ferr_new = a_i*df.t.loc[g_inds,'mJyas2_err']
         elif LCmodel is not None:
-            t_new = df['mjd'][i_inds] + tshift_i
-            f_new = (df['mJyas2'][i_inds] - b_i)/a_i
-            ferr_new = (df['mJyas2_err'][i_inds])/a_i
+            t_new = df.t.loc[g_inds,'mjd'] + tshift_i
+            f_new = (df.t.loc[g_inds,'mJyas2'] - b_i)/a_i
+            ferr_new = (df.t.loc[g_inds,'mJyas2_err'])/a_i
 
         new_t_ls.append(t_new)
         new_f_ls.append(f_new)
         new_err_ls.append(ferr_new)
         
-        df.loc[i_inds,'new_mjd'] = t_new
-        df.loc[i_inds,'new_mJyas2'] = f_new
-        df.loc[i_inds,'new_mJyas2_err'] = ferr_new
+        df.t.loc[g_inds,'new_mjd'] = t_new
+        df.t.loc[g_inds,'new_mJyas2'] = f_new
+        df.t.loc[g_inds,'new_mJyas2_err'] = ferr_new
 
         
     ### Put combined data into a data frame
@@ -376,81 +472,39 @@ def get_alignedLCs(df, fit_params, LCmodel=None, n_sigmas=None, mJyas2_lms=None,
 
 
 
-def get_bins(df, t):
-    t_range = np.linspace(min(t),max(t),100)
-    skip_inds = []
-    bins_t = []
-    t_bvals = [t_range[0]]
-    for i in range(len(t_range)-1):
-        # if i not in skip_inds:
-            lo_i = i
-            skip_inds.append(i)
-            up_i = i+1
-            # bin_i = np.where((df.t['mjd']>t_range[lo_i]) & (df.t['mjd']<t_range[up_i]))[0]
-            bin_i = df.ix_inrange('mjd', lowlim=t_range[lo_i], uplim=t_range[up_i])
-            while len(bin_i)<50 and up_i!=len(t_range)-1:
-                skip_inds.append(up_i)
-                up_i += 1
-                bin_i = df.ix_inrange('mjd', lowlim=t_range[lo_i], uplim=t_range[up_i])
-                
-            bins_t.append(bin_i)
-            t_bvals.append(t_range[up_i])
-    return(bins_t, t_bvals)
-
-
-
-def get_LCbins(df, bin_sz):
-
-    sort_inds = df.ix_sort_by_cols('mjd')
-
-    bins_inds = []
+def get_LCfit(comb_df, metric=1e4, indices=None):
+    inds = comb_df.getindices(indices=indices)
+    x = comb_df.t.loc[inds,'mjd']
+    y = comb_df.t.loc[inds,'mJyas2']
+    yerr = comb_df.t.loc[inds,'mJyas2_err']
     
-    for i in range(0, len(sort_inds), bin_sz):
-        if len(sort_inds) - (i+bin_sz) < bin_sz or len(sort_inds) - i < bin_sz:
-            bins_inds.append(sort_inds[i:])
-            break
-        else:
-            bins_inds.append(sort_inds[i:i + bin_sz])
+    kernel = ExpSquaredKernel(metric=metric)
+    gp = george.GP(kernel)
+    gp.compute(x, yerr)
 
-    return(bins_inds)
+    t = np.linspace(min(x), max(x), 5000)
+    mu, cov = gp.predict(y, t)
+    std = np.sqrt(np.diag(cov))
 
+    return(t, mu, std)
 
+# def get_LCfit(comb_df, noise_std=0.75, indices=None, verbose=0):
+#     if indices is None:
+#         indices = range(len(comb_df.t))
 
-def get_combinedLC(comb_df, bn_sz = 30):
+#     X = comb_df.t.loc[indices,'mjd'].values.reshape(-1,1)
+#     y = comb_df.t.loc[indices,'mJyas2'].values
     
-    tmeans = []
-    fmeans = []
-    fmerrs = []
-    stdevs = []
-    stdev_errs = []
-    chi2s = []
-    g_ixs = []
-    b_ixs = []
+#     kernel = 1 * RBF(length_scale=1.0, length_scale_bounds=(1e-2, 1e3))
     
-    bins = get_LCbins(comb_df,bn_sz)
-    
-    for i in range(len(bins)):
-        bin_i = bins[i]
-        comb_df.calcaverage_sigmacutloop('mJyas2', indices=bin_i, noisecol='mJyas2_err', percentile_cut_firstiteration=70, Nsigma=3.0)
-        tmeans.append(np.average(comb_df.t.loc[bin_i,'mjd'], weights=1-comb_df.t.loc[bin_i,'mJyas2_err']/max(comb_df.t.loc[bin_i,'mJyas2_err'])))
-        fmeans.append(comb_df.statparams['mean'])
-        fmerrs.append(comb_df.statparams['mean_err'])
-        stdevs.append(comb_df.statparams['stdev'])
-        stdev_errs.append(comb_df.statparams['stdev_err'])
-        chi2s.append(comb_df.statparams['X2norm'])
-        g_ixs.append(comb_df.statparams['ix_good'])
-        b_ixs.append(comb_df.statparams['ix_clip'])
-    
-    
-    tmeans = np.array(tmeans)
-    fmeans = np.array(fmeans)
-    fmerrs = np.array(fmerrs)
-    stdevs = np.array(stdevs)
-    stdev_errs = np.array(stdev_errs)
-    chi2s = np.array(chi2s)
+#     gaussian_process = GaussianProcessRegressor(kernel=kernel, alpha=noise_std**2, n_restarts_optimizer=9)
+#     gaussian_process.fit(X, y)
+#     if verbose > 0:
+#         gaussian_process.kernel_
+#     mean_prediction, std_prediction = gaussian_process.predict(X, return_std=True)
 
-    return(tmeans, fmeans, fmerrs, [stdevs, stdev_errs, chi2s, g_ixs, b_ixs])
-
+#     return(mean_prediction, std_prediction)
+    
 
 
 def convert_Jy2mag(x_jy, err_jy):
