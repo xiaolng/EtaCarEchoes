@@ -143,15 +143,15 @@ def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=No
     """
     id_inds = np.where(df.t['ID'].eq(lc_ID))[0]
     
-    if bad_expnums != None:
+    if bad_expnums is not None:
         working_inds = []
         for i in id_inds:
             diff_nm = df.t.loc[i,'fitsfile']
             expnum_se = re.search('\.(\d+)_ooi_',os.path.basename(diff_nm))
-            expnum = float(expnum_se.groups()[0])
+            expnum = int(expnum_se.groups()[0])
             if expnum not in bad_expnums:
                 working_inds.append(i)
-    elif bad_expnums == None:
+    elif bad_expnums is None:
         working_inds = id_inds
 
     if ferr_lm is not None:
