@@ -80,8 +80,8 @@ def get_LCdata(table, group=None, indices=None, excl_inds=None):
 
     ### Want to work with micro-Jansky
     for df in lc_list:
-        df['mJyas2'] = df['Jyas2']*1e6
-        df['mJyas2_err'] = df['Jyas2_err']*1e6
+        df['muJyas2'] = df['Jyas2']*1e6
+        df['muJyas2_err'] = df['Jyas2_err']*1e6
 
     return(pd.concat(lc_list))
 
@@ -104,7 +104,7 @@ def get_LCbins(df, bin_size, by_mjd=False, indices=None):
     bin_ts = []    
 
     sort_inds = df.ix_sort_by_cols('mjd', indices=indices)
-    sort_inds = df.ix_not_null('mJyas2', indices=sort_inds)
+    sort_inds = df.ix_not_null('muJyas2', indices=sort_inds)
     
     if by_mjd is False:
         for i in range(0, len(sort_inds), bin_size):
@@ -139,7 +139,7 @@ def get_LCbins(df, bin_size, by_mjd=False, indices=None):
 def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=None, by_mjd=False):
     """
     Return the indices of the table of usable values for a given LC position
-    # f_lm and ferr_lm is the upper limit of flux and its error in mJyas2 -- micro-Jansky / arcsec^2
+    # f_lm and ferr_lm is the upper limit of flux and its error in muJyas2 -- micro-Jansky / arcsec^2
     """
     id_inds = np.where(df.t['ID'].eq(lc_ID))[0]
     
@@ -155,9 +155,9 @@ def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=No
         working_inds = id_inds
 
     if ferr_lm is not None:
-        working_inds = df.ix_inrange('mJyas2_err', uplim=ferr_lm, indices=working_inds)
+        working_inds = df.ix_inrange('muJyas2_err', uplim=ferr_lm, indices=working_inds)
     if f_lm is not None:
-        working_inds = df.ix_inrange('mJyas2', uplim=f_lm, indices=working_inds)
+        working_inds = df.ix_inrange('muJyas2', uplim=f_lm, indices=working_inds)
 
     if bin_size is None:
         g_ixs = working_inds
@@ -167,13 +167,13 @@ def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=No
         
     #     for i in range(len(bins)):
     #         bin_i = bins[i]
-    #         df.calcaverage_sigmacutloop('mJyas2', indices=bin_i, noisecol='mJyas2_err', percentile_cut_firstiteration=70, Nsigma=3.0, verbose=0)
+    #         df.calcaverage_sigmacutloop('muJyas2', indices=bin_i, noisecol='muJyas2_err', percentile_cut_firstiteration=70, Nsigma=3.0, verbose=0)
     #         g_ixs.append(df.statparams['ix_good'])
 
     #     g_ixs = np.concatenate(g_ixs)
 
-    # median_filter = medfilt(df.t.loc[working_inds,'mJyas2'])
-    # diff_med = abs(df.t.loc[working_inds,'mJyas2'] - median_filter)
+    # median_filter = medfilt(df.t.loc[working_inds,'muJyas2'])
+    # diff_med = abs(df.t.loc[working_inds,'muJyas2'] - median_filter)
     # thresh_inds = np.where(diff_med < 2.5)[0]
     # g_ixs = working_inds[thresh_inds]
         
@@ -181,8 +181,12 @@ def get_LCinds(df, lc_ID, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=No
 
 
 
-def flag_inds(df, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=None, by_mjd=False):
+def flag_inds(df, f_lm=None, ferr_lm=None, bad_expnums=None, bin_size=None, by_mjd=False, bad_ids=None):
+    
     lc_ids = np.unique(df.t['ID'])
+    if bad_ids is not None:
+        lc_ids = [iid for iid in lc_ids if iid not in bad_ids]
+        
     g_ixs = [get_LCinds(df, lc_ID=i, f_lm=f_lm, ferr_lm=ferr_lm, bad_expnums=bad_expnums, bin_size=bin_size, by_mjd=by_mjd) for i in lc_ids]
 
     df.t['g_ixs_flag'] = False
@@ -204,10 +208,10 @@ def plot_lcs(df, lc_ID=None, plot_orig=False, plt_xl=None):
             
             if plot_orig is True:
                 i_inds = np.where(df.t['ID'].eq(i))[0]
-                plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'mJyas2'], yerr=df.t.loc[i_inds,'mJyas2_err'], fmt='o', ecolor='black', color='blue')
+                plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'muJyas2'], yerr=df.t.loc[i_inds,'muJyas2_err'], fmt='o', ecolor='black', color='blue')
 
             inds_sig = np.where(df.t['ID'].eq(i) & df.t['g_ixs_flag'].eq(True))[0]
-            plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'mJyas2'], yerr=df.t.loc[inds_sig,'mJyas2_err'], fmt='o', ecolor='black', color='orange')
+            plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'muJyas2'], yerr=df.t.loc[inds_sig,'muJyas2_err'], fmt='o', ecolor='black', color='orange')
             
             plt.axhline(y=0, linestyle='--', color='black')
     
@@ -223,10 +227,10 @@ def plot_lcs(df, lc_ID=None, plot_orig=False, plt_xl=None):
         
         if plot_orig is True:
             i_inds = np.where(df.t['ID'].eq(lc_ID))[0]
-            plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'mJyas2'], yerr=df.t.loc[i_inds,'mJyas2_err'], fmt='o', ecolor='black', color='blue')
+            plt.errorbar(df.t.loc[i_inds,'mjd'], df.t.loc[i_inds,'muJyas2'], yerr=df.t.loc[i_inds,'muJyas2_err'], fmt='o', ecolor='black', color='blue')
 
         inds_sig = np.where(df.t['ID'].eq(lc_ID) & df.t['g_ixs_flag'].eq(True))[0]
-        plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'mJyas2'], yerr=df.t.loc[inds_sig,'mJyas2_err'], fmt='o', ecolor='black', color='orange')
+        plt.errorbar(df.t.loc[inds_sig,'mjd'], df.t.loc[inds_sig,'muJyas2'], yerr=df.t.loc[inds_sig,'muJyas2_err'], fmt='o', ecolor='black', color='orange')
         
         plt.axhline(y=0, linestyle='--', color='black')
 
@@ -332,12 +336,12 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, t_range=None, t_peaks=None, tshift_d=N
     if LCmodel is None:
         g1_inds = np.where((df.t['ID'].eq(templ_ID)) & (df.t['g_ixs_flag'].eq(True)))[0]
         t1 = df.t.loc[g1_inds,'mjd'].values
-        f1 = df.t.loc[g1_inds,'mJyas2'].values
-        f1_err = df.t.loc[g1_inds,'mJyas2_err'].values
+        f1 = df.t.loc[g1_inds,'muJyas2'].values
+        f1_err = df.t.loc[g1_inds,'muJyas2_err'].values
     elif LCmodel is not None:
         t1 = LCmodel['mjd'].values
-        f1 = LCmodel['mJyas2'].values
-        f1_err = LCmodel['mJyas2_err'].values
+        f1 = LCmodel['muJyas2'].values
+        f1_err = LCmodel['muJyas2_err'].values
         
     # LCs
     tshifts = []
@@ -348,8 +352,8 @@ def fit_LCs(df, templ_ID=0, LCmodel=None, t_range=None, t_peaks=None, tshift_d=N
     for i, iid in enumerate(lc_ids):
         g2_inds = np.where((df.t['ID'].eq(iid)) & (df.t['g_ixs_flag'].eq(True)))[0]
         t2 = df.t.loc[g2_inds,'mjd'].values
-        f2 = df.t.loc[g2_inds,'mJyas2'].values
-        f2_err = df.t.loc[g2_inds,'mJyas2_err'].values
+        f2 = df.t.loc[g2_inds,'muJyas2'].values
+        f2_err = df.t.loc[g2_inds,'muJyas2_err'].values
         
         if tshift_ls is not None:
             tshift_d = tshift_ls[i]
@@ -382,12 +386,12 @@ def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None):
     if LCmodel is None:
         g1_inds = np.where(df.t['ID'].eq(templ_ID) & df.t['g_ixs_flag'].eq(True))[0]
         t1 = df.t.loc[g1_inds,'mjd'].values
-        f1 = df.t.loc[g1_inds,'mJyas2'].values
-        f1_err = df.t.loc[g1_inds,'mJyas2_err'].values
+        f1 = df.t.loc[g1_inds,'muJyas2'].values
+        f1_err = df.t.loc[g1_inds,'muJyas2_err'].values
     elif LCmodel is not None:
         t1 = LCmodel['mjd'].values
-        f1 = LCmodel['mJyas2'].values
-        f1_err = LCmodel['mJyas2_err'].values
+        f1 = LCmodel['muJyas2'].values
+        f1_err = LCmodel['muJyas2_err'].values
  
     ## LCs
     lc_ids, tshifts, a_norms, b_offsets = fit_params
@@ -400,8 +404,8 @@ def plot_LCfits(df, fit_params, templ_ID=0, LCmodel=None):
     for i, iid in enumerate(lc_ids):
         g2_inds = np.where(df.t['ID'].eq(iid) & df.t['g_ixs_flag'].eq(True))[0]
         t2 = df.t.loc[g2_inds,'mjd'].values
-        f2 = df.t.loc[g2_inds,'mJyas2'].values
-        f2_err = df.t.loc[g2_inds,'mJyas2_err'].values
+        f2 = df.t.loc[g2_inds,'muJyas2'].values
+        f2_err = df.t.loc[g2_inds,'muJyas2_err'].values
 
         tshift =tshifts[i]
         a = a_norms[i]
@@ -442,20 +446,20 @@ def get_combLCs(df, fit_params, LCmodel=None):
         # Define new values -- from fitting
         if LCmodel is None:
             t_new = df.t.loc[g_inds,'mjd'] - tshift_i
-            f_new = a_i*df.t.loc[g_inds,'mJyas2'] + b_i
-            ferr_new = a_i*df.t.loc[g_inds,'mJyas2_err']
+            f_new = a_i*df.t.loc[g_inds,'muJyas2'] + b_i
+            ferr_new = a_i*df.t.loc[g_inds,'muJyas2_err']
         elif LCmodel is not None:
             t_new = df.t.loc[g_inds,'mjd'] + tshift_i
-            f_new = (df.t.loc[g_inds,'mJyas2'] - b_i)/a_i
-            ferr_new = (df.t.loc[g_inds,'mJyas2_err'])/a_i
+            f_new = (df.t.loc[g_inds,'muJyas2'] - b_i)/a_i
+            ferr_new = (df.t.loc[g_inds,'muJyas2_err'])/a_i
 
         new_t_ls.append(t_new)
         new_f_ls.append(f_new)
         new_err_ls.append(ferr_new)
         
         df.t.loc[g_inds,'new_mjd'] = t_new
-        df.t.loc[g_inds,'new_mJyas2'] = f_new
-        df.t.loc[g_inds,'new_mJyas2_err'] = ferr_new
+        df.t.loc[g_inds,'new_muJyas2'] = f_new
+        df.t.loc[g_inds,'new_muJyas2_err'] = ferr_new
 
         
     ### Put combined data into a data frame
@@ -468,7 +472,7 @@ def get_combLCs(df, fit_params, LCmodel=None):
     fls = fls[ord_inds]
     ferrls = ferrls[ord_inds]
     
-    comb_data = {'mjd': tls, 'mJyas2': fls, 'mJyas2_err': ferrls}
+    comb_data = {'mjd': tls, 'muJyas2': fls, 'muJyas2_err': ferrls}
     comb = pdastrostatsclass()
     comb.t = comb.t.assign(**comb_data) 
         
@@ -479,8 +483,8 @@ def get_combLCs(df, fit_params, LCmodel=None):
 def get_LCfit(comb_df, metric=1e4, indices=None):
     inds = comb_df.getindices(indices=indices)
     x = comb_df.t.loc[inds,'mjd']
-    y = comb_df.t.loc[inds,'mJyas2']
-    yerr = comb_df.t.loc[inds,'mJyas2_err']
+    y = comb_df.t.loc[inds,'muJyas2']
+    yerr = comb_df.t.loc[inds,'muJyas2_err']
     
     kernel = ExpSquaredKernel(metric=metric)
     gp = george.GP(kernel)
@@ -497,7 +501,7 @@ def get_LCfit(comb_df, metric=1e4, indices=None):
 #         indices = range(len(comb_df.t))
 
 #     X = comb_df.t.loc[indices,'mjd'].values.reshape(-1,1)
-#     y = comb_df.t.loc[indices,'mJyas2'].values
+#     y = comb_df.t.loc[indices,'muJyas2'].values
     
 #     kernel = 1 * RBF(length_scale=1.0, length_scale_bounds=(1e-2, 1e3))
     
@@ -511,15 +515,27 @@ def get_LCfit(comb_df, metric=1e4, indices=None):
     
 
 
-def convert_Jy2mag(x_jy, err_jy):
+def convert_Jy2mag(x_jy, err_jy, lo_limt=1e-2):
     # x_jy in micro-janskys
-    mag = 23.9 - 2.5*np.log10(x_jy)
-    if err_jy is not None:
-        mag_err = 1.086 * (err_jy/x_jy)    # error of propagation
-        return(mag, mag_err)
-    else:
-        return(mag)
 
+    mags = []
+    mag_errs = []
+    for i, x in enumerate(x_jy):
+        if x <= 0.:
+            x = lo_limt
+        
+        mag = 23.9 - 2.5*np.log10(x)
+        mags.append(mag)
+    
+        if err_jy is not None:
+            mag_err = 1.086 * (err_jy[i]/x)    # error of propagation
+            mag_errs.append(mag_err)
+
+    if err_jy is not None:
+        return(mags, mag_errs)
+    else:
+        return(mags)
+    
 
 
 def get_mean_pix(img, x, y):
