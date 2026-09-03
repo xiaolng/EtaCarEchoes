@@ -1,0 +1,4 @@
+hd=109379
+spectral_type=G5 II
+teff=4830
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd109379.dat.gz

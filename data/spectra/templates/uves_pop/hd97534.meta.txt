@@ -1,0 +1,4 @@
+hd=97534
+spectral_type=A6 Ia
+teff=8400
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd97534.dat.gz

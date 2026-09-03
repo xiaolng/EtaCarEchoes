@@ -1,0 +1,4 @@
+hd=97082
+spectral_type=G1 Iab/Ib
+teff=5300
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd97082.dat.gz

@@ -1,0 +1,4 @@
+hd=81471
+spectral_type=A7 Iab
+teff=8300
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd81471.dat.gz

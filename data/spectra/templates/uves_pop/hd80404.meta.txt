@@ -1,0 +1,4 @@
+hd=80404
+spectral_type=A8 Ib
+teff=8200
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd80404.dat.gz

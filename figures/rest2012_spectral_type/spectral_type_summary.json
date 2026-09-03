@@ -1,0 +1,57 @@
+{
+  "method": "Rest et al. 2012 SI cross-correlation adapted to Pickles I templates",
+  "reference": "Rest et al. 2012, Nature, 482, 375 (arXiv:1112.2210)",
+  "rest2012_published": {
+    "sptype": "G2-G5",
+    "teff_K": 5000,
+    "notes": "UVES POP; 5050-6500A"
+  },
+  "this_work_adopted": {
+    "sptype": "G0I",
+    "teff_K": 5530.0
+  },
+  "epochs": [
+    {
+      "epoch": "Mar2011_IMACS200",
+      "best_template_sptype": "G0I",
+      "best_template_teff": 5508.08,
+      "best_template_r": 0.3849956402822856,
+      "teff_smoothed_peak": 5530.0,
+      "teff_bootstrap_median": 5530.0,
+      "teff_bootstrap_p2.5": 4960.0,
+      "teff_bootstrap_p97.5": 7680.0,
+      "nearest_sptype_to_peak": "G0I",
+      "wave_window": "5050-6350",
+      "template_library": "Pickles 1998 luminosity class I (proxy for Rest+ UVES POP)",
+      "rest2012_result": "G2-G5, Teff ~ 5000 K"
+    },
+    {
+      "epoch": "Apr2011_IMACS300",
+      "best_template_sptype": "G0I",
+      "best_template_teff": 5508.08,
+      "best_template_r": 0.34939172254785394,
+      "teff_smoothed_peak": 5570.0,
+      "teff_bootstrap_median": 5570.0,
+      "teff_bootstrap_p2.5": 4970.0,
+      "teff_bootstrap_p97.5": 7670.0,
+      "nearest_sptype_to_peak": "G0I",
+      "wave_window": "5050-6350",
+      "template_library": "Pickles 1998 luminosity class I (proxy for Rest+ UVES POP)",
+      "rest2012_result": "G2-G5, Teff ~ 5000 K"
+    },
+    {
+      "epoch": "Apr2011_WFCCD",
+      "best_template_sptype": "G0I",
+      "best_template_teff": 5508.08,
+      "best_template_r": 0.2855795090827221,
+      "teff_smoothed_peak": 5000.0,
+      "teff_bootstrap_median": 5280.0,
+      "teff_bootstrap_p2.5": 4750.0,
+      "teff_bootstrap_p97.5": 6590.0,
+      "nearest_sptype_to_peak": "G2I",
+      "wave_window": "5050-6350",
+      "template_library": "Pickles 1998 luminosity class I (proxy for Rest+ UVES POP)",
+      "rest2012_result": "G2-G5, Teff ~ 5000 K"
+    }
+  ]
+}

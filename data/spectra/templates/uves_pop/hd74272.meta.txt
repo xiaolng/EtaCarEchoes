@@ -1,0 +1,4 @@
+hd=74272
+spectral_type=A5 II
+teff=8500
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd74272.dat.gz

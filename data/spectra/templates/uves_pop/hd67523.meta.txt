@@ -1,0 +1,4 @@
+hd=67523
+spectral_type=F6 II
+teff=6600
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd67523.dat.gz

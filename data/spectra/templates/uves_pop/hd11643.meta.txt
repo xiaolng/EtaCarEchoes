@@ -1,0 +1,4 @@
+hd=11643
+spectral_type=K1 II
+teff=4400
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd11643.dat.gz

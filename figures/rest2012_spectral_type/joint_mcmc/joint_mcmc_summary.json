@@ -1,0 +1,79 @@
+{
+  "method": "Joint MCMC: Mg b (5060-5500A) + Ca II/Paschen (8200-8720A) vs Pickles I; v fixed to Rest+ -210 km/s",
+  "reference": "Rest et al. 2012, Nature, 482, 375",
+  "epochs": [
+    "Mar2011_IMACS200",
+    "Apr2011_IMACS300",
+    "Apr2011_WFCCD"
+  ],
+  "parameters": {
+    "Teff": {
+      "median": 5428.65776230847,
+      "p16": 5415.338094166429,
+      "p84": 6618.272614377729,
+      "minus_1sigma": 13.319668142041337,
+      "plus_1sigma": 1189.6148520692586
+    },
+    "ln_sigma_mgb": {
+      "median": -0.3193199154678126,
+      "p16": -0.34561153692850255,
+      "p84": -0.23120170078015292,
+      "minus_1sigma": 0.026291621460689973,
+      "plus_1sigma": 0.08811821468765965
+    },
+    "ln_sigma_caii": {
+      "median": -0.3130541879821148,
+      "p16": -0.33886741049357333,
+      "p84": -0.2616301770405209,
+      "minus_1sigma": 0.02581322251145851,
+      "plus_1sigma": 0.051424010941593934
+    },
+    "sigma_mgb": {
+      "median": 0.72664304776795,
+      "p16": 0.7077873829705695,
+      "p84": 0.7935793843106386
+    },
+    "sigma_caii": {
+      "median": 0.7312102886853074,
+      "p16": 0.7125769230484436,
+      "p84": 0.7697956591817939
+    },
+    "v_fixed_kms": {
+      "median": -210.0,
+      "p16": -210.0,
+      "p84": -210.0,
+      "minus_1sigma": 0.0,
+      "plus_1sigma": 0.0
+    }
+  },
+  "teff_K": {
+    "best": 5428.65776230847,
+    "minus_1sigma": 13.319668142041337,
+    "plus_1sigma": 1189.6148520692586,
+    "p16": 5415.338094166429,
+    "p84": 6618.272614377729,
+    "string": "5429+1190-13"
+  },
+  "nearest_pickles_to_median": {
+    "sptype": "G0I",
+    "teff_K": 5508.08
+  },
+  "best_discrete_template": {
+    "sptype": "G0I",
+    "teff_K": 5508.08,
+    "pickles_id": 124,
+    "posterior_weight": 0.9999995396113804,
+    "v_kms": -210.0
+  },
+  "rest2012": {
+    "sptype": "G2-G5",
+    "teff_K": 5000
+  },
+  "mcmc": {
+    "n_walkers": 48,
+    "n_steps": 4000,
+    "n_burn": 1000,
+    "v_fixed_kms": -210.0,
+    "mean_acceptance": 0.442984375
+  }
+}

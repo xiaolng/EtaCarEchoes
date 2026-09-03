@@ -1,0 +1,4 @@
+hd=102878
+spectral_type=A2 Iab
+teff=9100
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd102878.dat.gz

@@ -1,0 +1,4 @@
+hd=47306
+spectral_type=A0 II
+teff=9500
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd47306.dat.gz

@@ -1,0 +1,4 @@
+hd=79698
+spectral_type=G6 II
+teff=4750
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd79698.dat.gz

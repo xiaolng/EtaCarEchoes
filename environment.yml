@@ -9,4 +9,7 @@ dependencies:
   - matplotlib
   - scipy
   - scikit-learn
+  - astropy
+  - emcee
+  - corner
   - pip

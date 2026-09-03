@@ -1,0 +1,4 @@
+hd=77020
+spectral_type=G9 II
+teff=4500
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd77020.dat.gz

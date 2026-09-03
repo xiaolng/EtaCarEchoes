@@ -1,0 +1,4 @@
+hd=108968
+spectral_type=F7 Ib/II
+teff=6400
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd108968.dat.gz

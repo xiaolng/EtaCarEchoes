@@ -1,0 +1,17 @@
+ut_date,telescope_instrument,grating,slit_arcsec,pa_deg,notes
+2011-12-23,Baade/IMACS f2,200,0.9,270,EC2 light echo
+2012-03-18,Baade/IMACS f2,200,0.9,270,EC2 light echo
+2012-06-26,Baade/IMACS f2,200,0.9,270,EC2 light echo
+2012-10-14,Baade/IMACS f4,300,1.2,340,EC2 light echo
+2013-01-07,Clay/MagE,echellette,1.0,240,EC2 light echo
+2013-04-05,Baade/IMACS f4,300,0.7,270,EC2 light echo
+2014-01-07,Clay/MagE,echellette,1.0,240,EC2 light echo
+2014-02-05,Baade/IMACS f4,1200,0.9,293,EC2 light echo; H-alpha region
+2014-02-06,Baade/IMACS f4,300,0.9,293,EC2 light echo
+2014-05-19,Baade/IMACS f4,1200,0.7,293,EC2 light echo; H-alpha region
+2014-11-03,Gemini/GMOS,R400,1.0,293,EC2 light echo; nod-and-shuffle; text also cites 2014 Nov 13
+2015-01-20,Baade/IMACS f4,1200,0.7,293,EC2 light echo; H-alpha region
+2015-01-20,Baade/IMACS f4,300,0.7,293,EC2 light echo
+2016-03-04,Baade/IMACS f4,1200,0.7,293,EC2 light echo; H-alpha region
+2016-03-05,Baade/IMACS f2,300,0.7,293,EC2 light echo
+2016-03-25,Clay/MagE,echellette,1.0,240,EC2 light echo
