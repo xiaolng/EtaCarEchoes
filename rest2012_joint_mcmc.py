@@ -205,6 +205,56 @@ def ln_likelihood(theta, data: JointDataset, v_kms=V_FIXED):
     return ll
 
 
+def ln_likelihood_mgb_only(teff, ln_s_m, data: JointDataset, v_kms=V_FIXED):
+    """Mg b / 5270 window line-shape likelihood only."""
+    ll = 0.0
+    for ep in data.epochs:
+        m_mg = model_on_obs(ep["w_mg"], v_kms, teff, data.teffs, data.w_m, data.f_m)
+        o_m, t_m, _ = shape_vectors(ep["f_mg"], m_mg)
+        if o_m is None:
+            return -np.inf
+        ll += ln_gaussian(o_m - t_m, ln_s_m)
+    return ll
+
+
+def ln_likelihood_caii_only(teff, ln_s_c, data: JointDataset, v_kms=V_FIXED):
+    """Ca II IR + Paschen window line-shape likelihood only."""
+    ll = 0.0
+    for ep in data.epochs:
+        m_ca = model_on_obs(ep["w_ca"], v_kms, teff, data.teffs, data.w_c, data.f_c)
+        o_c, t_c, _ = shape_vectors(ep["f_ca"], m_ca)
+        if o_c is None:
+            return -np.inf
+        ll += ln_gaussian(o_c - t_c, ln_s_c)
+    return ll
+
+
+def ln_likelihood_mgb_v(teff, ln_s_m, v_epochs, data: JointDataset):
+    """Mg b line-shape likelihood with per-epoch velocity (km/s)."""
+    ll = 0.0
+    for i, ep in enumerate(data.epochs):
+        v = float(v_epochs[i])
+        m_mg = model_on_obs(ep["w_mg"], v, teff, data.teffs, data.w_m, data.f_m)
+        o_m, t_m, _ = shape_vectors(ep["f_mg"], m_mg)
+        if o_m is None:
+            return -np.inf
+        ll += ln_gaussian(o_m - t_m, ln_s_m)
+    return ll
+
+
+def ln_likelihood_caii_v(teff, ln_s_c, v_epochs, data: JointDataset):
+    """Ca II / Paschen line-shape likelihood with per-epoch velocity (km/s)."""
+    ll = 0.0
+    for i, ep in enumerate(data.epochs):
+        v = float(v_epochs[i])
+        m_ca = model_on_obs(ep["w_ca"], v, teff, data.teffs, data.w_c, data.f_c)
+        o_c, t_c, _ = shape_vectors(ep["f_ca"], m_ca)
+        if o_c is None:
+            return -np.inf
+        ll += ln_gaussian(o_c - t_c, ln_s_c)
+    return ll
+
+
 def ln_posterior(theta, data: JointDataset):
     lp = ln_prior(theta)
     if not np.isfinite(lp):
