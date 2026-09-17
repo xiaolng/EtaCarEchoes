@@ -1,0 +1,16 @@
+group,ID,ra,dec,color,x,y,LC,LC_url
+0,0,161.015575,-60.356043,cyan,2046,2316,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID0_lc.txt
+0,1,161.013301,-60.356044,cyan,2061,2316,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID1_lc.txt
+0,2,161.008752,-60.356045,cyan,2091,2316,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID2_lc.txt
+0,3,161.015574,-60.354918,cyan,2046,2331,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID3_lc.txt
+0,4,161.0133,-60.354919,cyan,2061,2331,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID4_lc.txt
+0,5,161.011025,-60.354919,cyan,2076,2331,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID5_lc.txt
+0,6,161.013298,-60.353794,cyan,2061,2346,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID6_lc.txt
+0,7,161.011024,-60.353794,cyan,2076,2346,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID7_lc.txt
+0,8,161.020117,-60.350417,cyan,2016,2391,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID8_lc.txt
+0,9,161.015569,-60.350418,cyan,2046,2391,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID9_lc.txt
+1,10,161.011026,-60.356044,black,2076,2316,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID10_lc.txt
+1,11,161.017847,-60.353792,black,2031,2346,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID11_lc.txt
+1,12,161.015571,-60.352668,black,2046,2361,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID12_lc.txt
+1,13,161.017844,-60.351543,black,2031,2376,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID13_lc.txt
+1,14,161.017843,-60.350417,black,2031,2391,,https://stsci-transients.stsci.edu/eta/etalc/results/rod_test/goodpos_i/ec0915/57/ec0915a57_goodpos_i_tmpl523435_ID14_lc.txt
