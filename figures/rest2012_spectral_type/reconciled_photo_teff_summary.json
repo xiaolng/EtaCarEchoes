@@ -1,0 +1,24 @@
+{
+  "ebv": 0.909,
+  "ebv_err": 0.018,
+  "rv": 4.8,
+  "A_band": {
+    "g": 4.789150637953749,
+    "r": 3.7618838863118143,
+    "i": 2.9809967380470215,
+    "z": 2.327752373745231
+  },
+  "E_g_i": 1.8081538999067273,
+  "color_for_teff": "g-i",
+  "gi_sys_mag": 0.05,
+  "calibration": "Pickles luminosity class I through DECam g,i",
+  "spectral_line_teff": 5411.0,
+  "spectral_line_teff_err": 9.0,
+  "photo_epoch_mjd": 55657.0,
+  "observed_g_i": 1.3577428913657776,
+  "dereddened_g_i": -0.45041100854095006,
+  "dereddened_g_i_err": 0.06411965485964338,
+  "photo_teff": 5504.863233520383,
+  "photo_teff_lo": 5410.5630312958165,
+  "photo_teff_hi": 5649.293513325736
+}
