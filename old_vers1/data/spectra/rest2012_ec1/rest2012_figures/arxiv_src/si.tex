@@ -1,0 +1,428 @@
+\clearpage
+\renewcommand*{\thesection}{S\arabic{section}}
+
+\section{Supplementary Information\label{sec:SI}}
+\subsection{Three dimensional orientation}
+The scattered-light path is shown in Figure~\S4figure\ref{fig:3Dplot}.  The
+3D-plot shows that with this light echo we see the eruption of
+$\eta$~Car from a viewing angle perpendicular to the principal axis of
+the Homunculus Nebula. It will be very interesting to compare spectra
+seen from this viewing angle with spectra from light echoes that view
+the eruption from the poles of the bipolar outflow.
+
+
+\subsection{Evidence that these are light echoes of the mid-19th century Great
+Eruption of $\eta$~Car}
+
+The angular separation between the center of our light-echo images and
+$\eta$~Car is $\sim$0.5~degrees, as shown in the left panel of
+Figure~1,
+\ifcheck
+  \redpen{CHECK \ref{fig:diffim}} 
+\fi
+in which our pointing is indicated with a white box. In the middle
+panel of this figure, our three epochs of SDSS {\it i}-band imaging
+obtained with the $\rm8k\times8k$ Mosaic imager on the CTIO 4-m Blanco
+telescope are displayed. The images, each with an exposure of 160~s,
+were obtained on 2003 Mar 10 ({\it A}), 2010 May 10 ({\it B}), and
+2011 Feb 6 ({\it C}).  Difference images, $C-A$ and $C-B$, are also
+shown (upper and middle right panels, respectively). In them, we
+notice excess flux from the first (black) and second epochs (white),
+which we interpret as light echoes from $\eta$~Car.  Sample light-echo
+positions are indicated with blue (epoch {\it A}) and red (epoch {\it
+B} and {\it C}) arrows.
+
+Comparing the first- and second-epoch images, we can determine the
+direction of the apparent motion of the light echo and infer the
+direction to the illuminating source. Most of the excess flux in the
+first-epoch image is toward the northern part of the image (blue
+arrows in Figure~1,
+\ifcheck
+  \redpen{CHECK \ref{fig:diffim}})
+\fi
+whereas most of the excess flux in the second-epoch image is in the
+southern portion (red arrows in Figure~1.
+\ifcheck
+  \redpen{CHECK \ref{fig:diffim}}) 
+\fi
+If the light echoes arise from $\eta$~Car, this is exactly the
+directional sense expected. We have also found similar regions of
+excess flux at other positions in proximity to $\eta$~Car, with
+apparent motions consistent with $\eta$~Car being the source of the
+outburst light, which we will discuss in a follow-up paper.  The
+vector method we have used previously to determine the origin of the
+light echoes for SNR 0509$-$67.5, Cas~A, and
+Tycho\cite{Rest05b,Rest08b} was applied here and, not surprisingly, we
+conclude that these excess fluxes are most likely light echoes from a
+dramatic brightening of $\eta$~Car.
+
+The flux profile of a light echo, which is the cut through the light
+echo along the axis pointing toward the source event, is the projected
+light curve, stretched or compressed depending on the inclination of
+the scattering dust filament, and convolved with the effects of the
+dust width and the seeing\cite{Rest11_leprofile}.  In pathological
+cases where the inclination of the dust filament is very unfavorable
+or where the dust filament is significantly thicker than any yet
+observed, a useful correspondence may be
+lost\cite{Rest11_leprofile}. For light echoes from sources in our
+Galaxy scattered by dust with typical widths and inclinations, we
+expect that the apparent motion of the light echo will move at a rate
+of one projected echo width between two epochs separated by twice the
+outburst event duration. For known galactic SNe light echoes the
+timescale of the brightest phase is of the order of a few months, so
+that an imaging separation time of 1 year is sufficient for there to
+be no overlap (on the sky) of light-echo
+features\cite{Rest05b,Rest08b}.  For a several-decade duration
+outburst, like that of $\eta$~Car, the difference image $C-B$ has only
+a time difference of 1 year, and can only reveal the small boundary
+fractions of the light echo in $C$, whose more complete extent can be
+seen in $C-A$ which has a time difference of 8 years.  We conclude
+that the duration of the event illuminating these light echoes is
+significantly longer than one year, consistent with our conclusion
+that these are echoes of the 20-year long Great Eruption of
+$\eta$~Car.
+
+\subsection{Determination of spectral type}
+%We compare the observed light echo spectrum to supergiant spectra from
+%the UVES atlas\cite{Bagnulo03}. The UVES spectra have high
+%resolving power, and in order to be able to compare them to the light echo
+%spectra at a much lower resolution, we match them to the same
+%7 \AA\ resolution as the light-echo spectra by convolving them with
+%a gaussian with a FWHM of 7\AA.  We then divide the spectra by the
+%low-order continuum which we determine by convolving the spectra with
+%a gaussian with a FWHM of 200~\AA.  The upper left panel of
+%Figure~\ref{fig:speclines} compares two of the observed light echo
+%spectra to a selection of UVES supergiants in the 5060-5500~\AA\
+%wavelength range (see also Table~\ref{tab:UVESstellarlib}). The light
+%echo spectra correlate very well with late-type F-stars and G-stars,
+%in particular the Mg~b lines, the \ion{Ca}{I}, \ion{Fe}{I},
+%\ion{Ti}{I}, \ion{Cr}{I} blend at 5270~\AA, and the \ion{Fe}{I},
+%\ion{Ba}{I}, \ion{Ca}{I}, \ion{Mn}{I}, \ion{Co}{I}, \ion{Ti}{I}~and~II, 
+%\ion{Ni}{I} blend at 6497~\AA.  M-type stars and later show
+%significantly less similarities.
+
+We compare the light-echo spectra to the compilation of supergiant
+spectra in the UVES atlas\cite{Bagnulo03} (see Table~S2).
+\ifcheck
+  \redpen{CHECK}
+\fi
+The upper left panel of Figure~\S4figure\ref{fig:speclines} shows the
+light-echo spectra, flattened by dividing by low-order continuum fits,
+and the UVES supergiant sequence.  The instrument configuration for
+the EC1A spectrum was designed to optimize the S/N ratio in the
+wavelength region of the Ca II IR triplet, resulting in a lower S/N
+ratio for $\lambda<6000$~\AA. For this reason the EC1A spectrum is
+absent from the upper left panel of Figure~\S4figure\ref{fig:speclines}.  The
+light-echo spectra correlate very well with late-F and G-type stars,
+in particular the Mg~b lines and line blends at 5270~\AA\ and
+6497~\AA. Both earlier- and later-type spectra show significantly
+fewer similarities.
+
+We calculate the cross-correlation parameter $r$ between the light
+echo and the UVES spectra using the IRAF routine {\tt xcsao} in the
+wavelength range 5050-6500~\AA\ (see left panel of
+Figure~\S4figure\ref{fig:pdf}). We exclude wavelength ranges contaminated by
+fore/background emission lines
+(see Table~S4). 
+\ifcheck
+  \redpen{CHECK} 
+\fi
+We find that extending the wavelength region to redder wavelengths
+(e.g., 5050-7500~\AA) decreases the correlation, and in particular the
+correlation differences between the different spectral types. The
+reasons for a decrease in correlation are threefold: (1) the spectral
+differences between F, G, and K stars are stronger in the bluer
+wavelength ranges, and therefore including redder wavelengths dilutes
+the discrimination power, (2) strong fore/background emission lines like
+$H_{\alpha}$, \ion{N}{II}, and \ion{S}{II} introduce large
+discontinuities in the wavelength coverage, and (3) the chip gaps fall
+into the 6500-7500~\AA\ wavelength range, further adding to the
+discontinuities. For the above reasons we determine the 5050-6500~\AA\
+wavelength range to be optimal for the correlation analysis.
+
+%the cross-correlation parameter $r$ is defined as the ratio of the
+%height of the correlation peak $h$ over the root mean square of the
+%antisymmetric component of the cross correlation (Tonry & Davis, 1997;
+%Blondin & Tonry, 2006). It is there can range between 0 and infinity,
+%though typically correlation values are considered non spurious above
+%$r$=3.
+
+%It is noteworthy,
+%however, that for this wavelength range \specMlo\ correlates very well
+%with the F8 and one of the F9 spectral templates.
+
+
+To quantitatively estimate the temperatures of the supergiants that
+correlate best, we smooth $r(T_{eff})$ with a Gaussian of width
+$\sigma=300$~K (see lines in left panel of Figure~\S4figure\ref{fig:pdf}). We
+find that the temperature with maximum correlation is 5210~K and 4950K
+for \specMlo\ and \specDP, respectively. The right panel of
+Figure~\S4figure\ref{fig:pdf} shows the probability density functions (PDFs)
+of the temperature, $T_{eff}$, of the supergiant spectral template
+having the best smoothed correlation, $r(T_{eff})$, with each
+light-echo spectrum. The PDFs are computed by bootstrap resampling of
+the distribution $10^5$ times.  The 95\% confidence intervals of the
+best-matching temperatures are 4850-5550~K (spectral type G0-G5) and
+4450-5400~K (spectral type G0-K1) for \specMlo\ and \specDP,
+respectively.  Using an extended wavelength range of 5050-7500~\AA,
+the 95\% confidence intervals are 3700-6300~K (F8-K5) and 3450-5100~K
+(G2-M1) for \specMlo\ and \specDP, respectively. For the reasons
+mentioned above, the extended wavelength range results in a spectral
+type that is less constrained compared to the 5050-6500~\AA\ range.
+We conclude that the light-echo spectra agree best with supergiant
+spectral types in the range of G2-G5,
+\ifcheck
+  \redpen{CHECK} 
+\fi
+with an effective temperature of $\sim$5000~K.
+\ifcheck
+  \redpen{CHECK} 
+\fi
+We conservatively exclude spectral types of F7 and earlier.
+
+
+%As shown in Figure~\ref{fig:speclines}, the \ion{Na}{I}~D resonance
+%doublet near 5890~\AA\ is prominent in both the echo and comparison
+%spectra.  Unfortunately, it suffers from three sources of
+%contamination in the former, in part because of the low resolution:
+%\ion{He}{I} $\lambda$5876 emission from the Carina Nebula at the
+%blueward edge; extremely strong, multiple-component interstellar
+%\ion{Na}{I}~D absorption within the Carina Nebula\cite{Walborn07}; and
+%residuals from night sky emission at the redward edge.  Thus, they
+%cannot be reliably used as spectral-type diagnostics for the echo.
+
+Unfortunately, the UVES spectra have a gap in coverage around the
+\ion{Ca}{II} IR triplet, and therefore we use a compilation of
+supergiant spectra\cite{Cenarro01} covering the \ion{Ca}{II} triplet
+wavelength range (see Table~S3).
+\ifcheck
+  \redpen{CHECK}
+\fi
+% We
+% exclude stars from this sample for which a literature search reveals
+% significantly varying spectral types.
+%and/or the SIMBAD spectral type is very different from
+%the one quoted in \cite{Cenarro01}
+The lower-left panel of Figure~\S4figure\ref{fig:speclines} compares the
+observed light-echo spectrum with this atlas. For early-type stars up
+to G0, the wavelength range redward of 8300~\AA\ is mainly dominated
+by the H Paschen series, which contaminates the \ion{Ca}{II} triplet
+but gradually disappears as the effective temperature
+decreases\cite{Cenarro01}. Note that the observed light-echo spectra
+do not show any clear signs of the H Paschen lines; in particular, the
+lines at 8409~\AA\ and 8498~\AA\ are at most very weak.  The earliest
+spectral types in agreement with such weak or non-existent H-Paschen
+lines are late F-types, in excellent agreement with the spectral
+correlation results in the wavelength range 5050-6500~\AA.
+
+Visual observers noted a reddish or ``ruddy'' color during
+$\eta$~Car's Great Eruption, e.g. described by Herschel as ``redder
+than Arcturus''\cite{Frew04,SF11}. These observations point to a
+temperature of $T_{eff}<4500$~K, lower than the temperature we infer
+from the spectral lines. It is plausible that reddening by grains
+forming in the eruption cause the apparent color. We note, however,
+that the temperature inferred from the spectral type is much more
+reliable than an apparent color, in particular one done visually,
+since it is not influenced by unknown amounts of reddening caused by new
+dust formation along the line of sight.
+
+%The systematic shift to higher blueshifted velocities for earlier spectral types is
+%an artifact due the appearance of H Paschen lines which are at
+%slightly larger wavelengths than the \ion{Ca}{II} IR triplet.
+
+%This calculation assumes that the scattering dust has zero relative velocity,
+%i.e. that there is no ``moving mirror'' effect. 
+
+The lower-right panel of Figure~\S4figure\ref{fig:speclines} shows velocities
+determined from cross-correlation from spectra of different spectral
+types.  The contribution to the derived velocity caused by the motion of the
+reflecting dust sheet, i.e. the \emph{moving-mirror effect}, is likely
+less than 30~km~s$^{-1}$ given the relatively low dominant expansion
+speeds of cool gas in the Carina Nebula H~{\sc ii}
+region\cite{Walborn02}.  This systematic error could be constrained
+better with more spectra of light echoes located close enough to each
+other that they probe similar viewing angles, but different enough
+that the scattering dust is parsecs apart and thus has independent
+velocities.
+
+
+\subsection{The most similar SN impostor}
+The closest SN impostor in temperature is UGC~2773~OT2009-1, which is
+also dominated by a forest of absorption lines, similar to an F-type
+supergiant\cite{Smith10,Foley11}. However, the \ion{Ca}{II} IR triplet
+has a P~Cygni profile with a strong emission component\cite{Foley11}.
+Interestingly, UGC~2773~OT2009-1 is also one of the few examples where
+the outburst has persisted for years and in fact still
+continues\cite{Smith10,Smith11,Foley11}.
+
+\subsection{H$\alpha$ line}
+The interpretation of the H$\alpha$ emission line is difficult, since
+the fore/background emission line subtraction is imperfect. The
+left panel of Figure~3
+\ifcheck
+  \redpen{CHECK \ref{fig:spec}} 
+\fi
+shows the H$\alpha$ line of the three observed light-echo
+spectra. Both
+\specMlo\ and \specDP\ show narrow emission at zero velocity, most
+likely caused by the incompletely subtracted fore/background
+emission. However, they also show asymmetry at the wavelength for
+which we would expect H$\alpha$ emission if the hydrogen has the same
+blueshifted velocity of -210~km~s$^{-1}$, indicated with the red
+line. If this is indeed a blueshifted H$\alpha$ from the eruption, it
+is a narrow one unlike many of the SN impostors, but similar to the
+coolest ones like UGC~2773~OT2009-1\cite{Smith10,Foley11}
+.
+
+\subsection{Epoch of Spectra}
+
+The slit position of the light echo spectrum is shown in the bottom
+right panel of Figure~1.
+\ifcheck
+  \redpen{CHECK \ref{fig:diffim}} 
+\fi
+Because the $\eta$~Car Great Eruption lasted over a decade, it is not
+straightforward to determine the epochs probed by the light-echo
+spectra. In order to attempt this, we compare the historical light
+curve\cite{SF11} (see Figure~2)
+\ifcheck
+  \redpen{CHECK \ref{fig:lc}} 
+\fi
+with time variation of the light echoes.
+
+We summarize here an account\cite{SF11} of the photometric history of
+the Great Eruption of $\eta$~Car.  John Herschel recorded a
+brightening of $\sim$1 mag in less than two weeks near the end of
+1837. Over the next few months, $\eta$~Car slowly faded
+again. Unfortunately, there is a gap in brightness estimates for the
+period between late 1838 and 1841.  There was another brightening in
+early 1843, and then another episode where $\eta$~Car again faded back
+to typical non-outburst brightness. Late in 1844, $\eta$~Car's
+greatest recorded brightening episode began, with peak brightness
+occurring in early 1845. Thereafter a slow decline began which lasted
+for the next decade.
+
+We can compare $\eta$~Car's historical light curve to the light curve
+we derived from the light echoes: at a given epoch and position on the
+sky, the light-echo flux is the flux of the source event integrated
+over a range of epochs. The range of epochs represented in the
+instantaneous flux at a given pointing depends on both astrophysical
+(dust width and inclination) and observational (seeing) factors, and
+can be represented by a near-Gaussian window
+function\cite{Rest11_leprofile}. For the light-echo systems we have
+characterized around the Cas~A and Tycho remnants, the full width at
+half maximum was on the order of 25-120
+days\cite{Rest11_leprofile}. Thus if the flux at the same spatial
+position is measured at different epochs, the brightness recorded will
+be the true outburst light curve convolved with the window function.
+
+With four more epochs of the light echo obtained at the Faulkes
+Telescope South (FTS) 2-m telescope, we generated light curves of
+$\eta$~Car at 17 positions along the spectroscopic slit shown in
+Figure~1.
+\ifcheck
+  \redpen{CHECK \ref{fig:diffim}} 
+\fi
+Since we have images from 2003 to mid-2011, these light curves span
+$\sim$8 years.  After an overall normalization to each of these light
+curves to match each other, the differences in light-curve profiles
+are remarkably small, with a typical standard deviation in flux of
+2-4\%
+(see Table~S5).
+\ifcheck
+  \redpen{CHECK} 
+\fi
+We therefore average these light curves into a single light curve. We
+show this light curve in Figure~2,
+\ifcheck
+  \redpen{CHECK \ref{fig:lc}} 
+\fi
+shifted by 174.2~yrs (green circles), 167.95~yrs (red circles), and
+166.28~yrs (blue circles) in order to match the 1838, 1843, and 1845
+outbursts, respectively. The earliest epoch (2003) needs to be
+considered an upper limit, since that epoch was used as the template
+for the difference imaging, and we determined the light-echo flux at
+that epoch as the difference between the flux in the template image
+and the flux at a different, apparently empty position in the same
+image. In other words, there is an undetermined flux zeropoint when an
+on-frame reference location may contain light echo flux.
+It is also important to note that the light echo light curve is
+determined from images in SDSS~$i$, which can introduces systematics
+when comparing it to the visual magnitude of the historical light
+curve, in particular since LBV's change their colors during outbursts.
+
+The light-echo light curve we derive from our images clearly reveals
+brightening of 2 magnitudes or more within an interval of 8 years. The
+Lesser Eruption of $\eta$~Car from 1887 to 1896 caused $\eta$~Car to
+brighten by roughly 1~magnitude only. Unless the Lesser Eruption was
+extremely asymmetric such that it increased by an additional
+1~magnitude or more in the direction of the light echo, the Lesser
+Eruption is excluded as the source of the light echoes.  We also note
+that most of the brightening occurs between the second and third
+epochs in a 9 month time-span, indicating that the peak was at some
+time between these epochs.
+
+We conclude that there are three remaining eruption epochs to which
+our observed light curve could be assigned: 1)~the 1838 peak, 2)~the
+1843 peak, and 3)~the 1845 peak. A fourth possibility is an even
+earlier, unrecorded brightening. Our ability to decide among the
+different epochs relies on the time differences between our images
+and spectra. The second- and third-epoch pair have only 9 months
+between them and therefore provide strong discrimination for
+brightenings. The spectroscopic observations were done shortly after
+the third-epoch images, corresponding to $<$9 months after a
+brightness maximum.
+
+We now discuss the individual epochs and the likelihood that they
+correspond to the brightening observed in our images:
+\begin{itemize}
+\item {\bf 1838 peak:}
+The first two epochs agree very well with the historical light curve.
+The historical light curve seems to decline faster after the peak at
+the beginning of 1838. Unfortunately, the historical data that
+constrain this decline are few and have large uncertainties. In
+addition, if the width of the scattering dust filament is very large,
+then the window function can span a wide range of epochs, which would
+cause the light-echo light curve to have a shallower decline then the
+event light curve.
+\item {\bf 1843 peak:}
+The first two epochs again agree very well. The decline in brightness
+is in very good agreement with what would be expected from the
+historical light curve.
+\item {\bf 1845 peak:}
+The first two epochs also agree very well with the 1845 peak.
+However, the current decline in brightness ($\approx$0.6 mag
+yr$^{-1}$) is considerably faster than the typical decline of
+$\approx$0.1mag yr$^{-1}$ observed after 1845. The light-echo light
+curve can only be put in agreement with the historical light curve if
+there was a fast, unobserved decline from the peak in 1845.
+\end{itemize}
+
+We conclude that the most likely source of the light echoes for which
+we have spectra is the 1843 outburst, shortly after its peak.
+Assuming typical dust properties as observed for light echoes of other
+Galactic sources \cite{Rest11_leprofile}, the spectra is the
+light-curve-weighted average over an epoch range of 1-4 months.  In
+the future, we will be able to further constrain the epoch range with
+additional imaging data.  The two peaks in 1838 and 1845 cannot yet be
+excluded completely, but continued observations of the light echoes at
+monthly intervals should discriminate the possibilities within a year.
+This work, combined with targeted new observations and other
+contemporary images which may become known, will likely provide a
+detailed photometric time-series of the Great Eruption with the
+probability of a useful companion spectral time-series.  The recovery
+of valuable astrophysical observational data from the pre-imaging era
+is another powerful illustration of the power of light-echo
+observations
+
+\clearpage
+
+%\renewcommand*{\thefigure}{S\arabic{figure}}
+%\newcounter{subfigure}
+%\renewcommand{\thefigure}{\arabic{figure}\alph{subfigure}}
+%\setcounter{figure}{5}
+
+
+\input{figures}  
+\input{sifigures}
+

@@ -1,0 +1,4 @@
+hd=125809
+spectral_type=G5/G6 Ib
+teff=4790
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd125809.dat.gz

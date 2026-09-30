@@ -1,0 +1,4 @@
+hd=225212
+spectral_type=K3 Iab
+teff=4000
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd225212.dat.gz

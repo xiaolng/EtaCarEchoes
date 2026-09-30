@@ -1,0 +1,4 @@
+hd=74180
+spectral_type=F3 Ia
+teff=7320
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd74180.dat.gz

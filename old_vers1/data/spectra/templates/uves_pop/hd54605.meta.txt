@@ -1,0 +1,4 @@
+hd=54605
+spectral_type=F8 Iab
+teff=6200
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd54605.dat.gz

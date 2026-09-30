@@ -1,0 +1,4 @@
+hd=12642
+spectral_type=K5 Iab
+teff=3750
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd12642.dat.gz

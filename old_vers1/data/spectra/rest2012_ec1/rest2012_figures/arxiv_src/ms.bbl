@@ -1,0 +1,234 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{DH97}
+\bibinfo{author}{{Davidson}, K.} \& \bibinfo{author}{{Humphreys}, R.~M.}
+\newblock \bibinfo{title}{{Eta Carinae and Its Environment}}.
+\newblock \emph{\bibinfo{journal}{\araa}} \textbf{\bibinfo{volume}{35}},
+  \bibinfo{pages}{1--32} (\bibinfo{year}{1997}).
+
+\bibitem{Damineli96}
+\bibinfo{author}{{Damineli}, A.}
+\newblock \bibinfo{title}{{The 5.52 Year Cycle of Eta Carinae}}.
+\newblock \emph{\bibinfo{journal}{\apjl}} \textbf{\bibinfo{volume}{460}},
+  \bibinfo{pages}{L49+} (\bibinfo{year}{1996}).
+
+\bibitem{Frew04}
+\bibinfo{author}{{Frew}, D.~J.}
+\newblock \bibinfo{title}{{The Historical Record of {$\eta$} Carinae I. The
+  Visual Light Curve, 1595-2000}}.
+\newblock \emph{\bibinfo{journal}{Journal of Astronomical Data}}
+  \textbf{\bibinfo{volume}{10}}, \bibinfo{pages}{6} (\bibinfo{year}{2004}).
+
+\bibitem{SF11}
+\bibinfo{author}{{Smith}, N.} \& \bibinfo{author}{{Frew}, D.~J.}
+\newblock \bibinfo{title}{{A revised historical light curve of Eta Carinae and
+  the timing of close periastron encounters}}.
+\newblock \emph{\bibinfo{journal}{\mnras}} \bibinfo{pages}{1097}
+  (\bibinfo{year}{2011}).
+
+\bibitem{Smith03}
+\bibinfo{author}{{Smith}, N.} \emph{et~al.}
+\newblock \bibinfo{title}{{Mass and Kinetic Energy of the Homunculus Nebula
+  around {$\eta$} Carinae}}.
+\newblock \emph{\bibinfo{journal}{\aj}} \textbf{\bibinfo{volume}{125}},
+  \bibinfo{pages}{1458--1466} (\bibinfo{year}{2003}).
+
+\bibitem{Smith08}
+\bibinfo{author}{{Smith}, N.}
+\newblock \bibinfo{title}{{A blast wave from the 1843 eruption of {$\epsilon$}
+  Carinae}}.
+\newblock \emph{\bibinfo{journal}{\nat}} \textbf{\bibinfo{volume}{455}},
+  \bibinfo{pages}{201--203} (\bibinfo{year}{2008}).
+
+\bibitem{Goodrich89}
+\bibinfo{author}{{Goodrich}, R.~W.}, \bibinfo{author}{{Stringfellow}, G.~S.},
+  \bibinfo{author}{{Penrod}, G.~D.} \& \bibinfo{author}{{Filippenko}, A.~V.}
+\newblock \bibinfo{title}{{SN 1961V - an extragalactic ETA Carinae analog}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{342}},
+  \bibinfo{pages}{908--916} (\bibinfo{year}{1989}).
+
+\bibitem{Humphreys94}
+\bibinfo{author}{{Humphreys}, R.~M.} \& \bibinfo{author}{{Davidson}, K.}
+\newblock \bibinfo{title}{{The luminous blue variables: Astrophysical
+  geysers}}.
+\newblock \emph{\bibinfo{journal}{\pasp}} \textbf{\bibinfo{volume}{106}},
+  \bibinfo{pages}{1025--1051} (\bibinfo{year}{1994}).
+
+\bibitem{Humphreys99}
+\bibinfo{author}{{Humphreys}, R.~M.}, \bibinfo{author}{{Davidson}, K.} \&
+  \bibinfo{author}{{Smith}, N.}
+\newblock \bibinfo{title}{{Eta Carinae's Second Eruption and the Light Curves
+  of the eta Carinae Variables}}.
+\newblock \emph{\bibinfo{journal}{\pasp}} \textbf{\bibinfo{volume}{111}},
+  \bibinfo{pages}{1124--1131} (\bibinfo{year}{1999}).
+
+\bibitem{VanDyk00}
+\bibinfo{author}{{Van Dyk}, S.~D.} \emph{et~al.}
+\newblock \bibinfo{title}{{SN 1997bs in M66: Another Extragalactic {$\eta$}
+  Carinae Analog?}}
+\newblock \emph{\bibinfo{journal}{\pasp}} \textbf{\bibinfo{volume}{112}},
+  \bibinfo{pages}{1532--1541} (\bibinfo{year}{2000}).
+
+\bibitem{Vink09}
+\bibinfo{author}{{Vink}, J.~S.}
+\newblock \bibinfo{title}{{Eta Carinae and the Luminous Blue Variables}}.
+\newblock \emph{\bibinfo{journal}{ArXiv e-prints}}  (\bibinfo{year}{2009}).
+\newblock \eprint{0905.3338}.
+
+\bibitem{Kashi10_ngc300}
+\bibinfo{author}{{Kashi}, A.}, \bibinfo{author}{{Frankowski}, A.} \&
+  \bibinfo{author}{{Soker}, N.}
+\newblock \bibinfo{title}{{NGC 300 OT2008-1 as a Scaled-down Version of the Eta
+  Carinae Great Eruption}}.
+\newblock \emph{\bibinfo{journal}{\apjl}} \textbf{\bibinfo{volume}{709}},
+  \bibinfo{pages}{L11--L15} (\bibinfo{year}{2010}).
+
+\bibitem{Davidson87}
+\bibinfo{author}{{Davidson}, K.}
+\newblock \bibinfo{title}{{The relation between apparent temperature and
+  mass-loss rate in hypergiant eruptions}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{317}},
+  \bibinfo{pages}{760--764} (\bibinfo{year}{1987}).
+
+\bibitem{Bagnulo03}
+\bibinfo{author}{{Bagnulo}, S.} \emph{et~al.}
+\newblock \bibinfo{title}{{The UVES Paranal Observatory Project: A Library of
+  High- Resolution Spectra of Stars across the Hertzsprung-Russell Diagram}}.
+\newblock \emph{\bibinfo{journal}{The Messenger}}
+  \textbf{\bibinfo{volume}{114}}, \bibinfo{pages}{10--14}
+  (\bibinfo{year}{2003}).
+
+\bibitem{Cenarro01}
+\bibinfo{author}{{Cenarro}, A.~J.} \emph{et~al.}
+\newblock \bibinfo{title}{{Empirical calibration of the near-infrared Ca ii
+  triplet - I. The stellar library and index definition}}.
+\newblock \emph{\bibinfo{journal}{\mnras}} \textbf{\bibinfo{volume}{326}},
+  \bibinfo{pages}{959--980} (\bibinfo{year}{2001}).
+
+\bibitem{Smith06}
+\bibinfo{author}{{Smith}, N.}
+\newblock \bibinfo{title}{{The Structure of the Homunculus. I. Shape and
+  Latitude Dependence from $H_{2}$ and [Fe II] Velocity Maps of $\eta$
+  Carinae}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{644}},
+  \bibinfo{pages}{1151--1163} (\bibinfo{year}{2006}).
+
+\bibitem{Smith04}
+\bibinfo{author}{{Smith}, N.}, \bibinfo{author}{{Vink}, J.~S.} \&
+  \bibinfo{author}{{de Koter}, A.}
+\newblock \bibinfo{title}{{The Missing Luminous Blue Variables and the
+  Bistability Jump}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{615}},
+  \bibinfo{pages}{475--484} (\bibinfo{year}{2004}).
+
+\bibitem{LeSueur70a}
+\bibinfo{author}{{Le Sueur}, A.}
+\newblock \bibinfo{title}{{On the Nebulae of Argo and Orion, and on the
+  Spectrum of Jupiter}}.
+\newblock \emph{\bibinfo{journal}{Royal Society of London Proceedings Series
+  I}} \textbf{\bibinfo{volume}{18}}, \bibinfo{pages}{245--250}
+  (\bibinfo{year}{1869}).
+
+\bibitem{LeSueur70b}
+\bibinfo{author}{{Le Sueur}, A.}
+\newblock \bibinfo{title}{{Observations with the Great Melbourne Telescope, in
+  a Letter to Prof. Stokes}}.
+\newblock \emph{\bibinfo{journal}{Royal Society of London Proceedings Series
+  I}} \textbf{\bibinfo{volume}{19}}, \bibinfo{pages}{18--19}
+  (\bibinfo{year}{1870}).
+
+\bibitem{Walborn77}
+\bibinfo{author}{{Walborn}, N.~R.} \& \bibinfo{author}{{Liller}, M.~H.}
+\newblock \bibinfo{title}{{The earliest spectroscopic observations of eta
+  Carinae and its interaction with the Carina Nebula}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{211}},
+  \bibinfo{pages}{181--183} (\bibinfo{year}{1977}).
+
+\bibitem{Humphreys08}
+\bibinfo{author}{{Humphreys}, R.~M.}, \bibinfo{author}{{Davidson}, K.} \&
+  \bibinfo{author}{{Koppelman}, M.}
+\newblock \bibinfo{title}{{The Early Spectra of Eta Carinae 1892 to 1941 and
+  the Onset of its High Excitation Emission Spectrum}}.
+\newblock \emph{\bibinfo{journal}{\aj}} \textbf{\bibinfo{volume}{135}},
+  \bibinfo{pages}{1249--1263} (\bibinfo{year}{2008}).
+
+\bibitem{Smith05}
+\bibinfo{author}{{Smith}, N.}
+\newblock \bibinfo{title}{{Doppler tomography of the Little Homunculus:
+  high-resolution spectra of [FeII]{$\lambda$}16435 around Eta Carinae$^{*}$}}.
+\newblock \emph{\bibinfo{journal}{\mnras}} \textbf{\bibinfo{volume}{357}},
+  \bibinfo{pages}{1330--1336} (\bibinfo{year}{2005}).
+
+\bibitem{Smith11}
+\bibinfo{author}{{Smith}, N.}, \bibinfo{author}{{Li}, W.},
+  \bibinfo{author}{{Silverman}, J.~M.}, \bibinfo{author}{{Ganeshalingam}, M.}
+  \& \bibinfo{author}{{Filippenko}, A.~V.}
+\newblock \bibinfo{title}{{Luminous blue variable eruptions and related
+  transients: diversity of progenitors and outburst properties}}.
+\newblock \emph{\bibinfo{journal}{\mnras}} \textbf{\bibinfo{volume}{415}},
+  \bibinfo{pages}{773--810} (\bibinfo{year}{2011}).
+
+\bibitem{Rest05b}
+\bibinfo{author}{{Rest}, A.} \emph{et~al.}
+\newblock \bibinfo{title}{{Light echoes from ancient supernovae in the Large
+  Magellanic Cloud}}.
+\newblock \emph{\bibinfo{journal}{\nat}} \textbf{\bibinfo{volume}{438}},
+  \bibinfo{pages}{1132--1134} (\bibinfo{year}{2005}).
+
+\bibitem{Rest08b}
+\bibinfo{author}{{Rest}, A.} \emph{et~al.}
+\newblock \bibinfo{title}{{Scattered-Light Echoes from the Historical Galactic
+  Supernovae Cassiopeia A and Tycho (SN 1572)}}.
+\newblock \emph{\bibinfo{journal}{\apjl}} \textbf{\bibinfo{volume}{681}},
+  \bibinfo{pages}{L81--L84} (\bibinfo{year}{2008}).
+
+\bibitem{Rest11_leprofile}
+\bibinfo{author}{{Rest}, A.} \emph{et~al.}
+\newblock \bibinfo{title}{{On the Interpretation of Supernova Light Echo
+  Profiles and Spectra}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{732}},
+  \bibinfo{pages}{2} (\bibinfo{year}{2011}).
+
+\bibitem{Smith10}
+\bibinfo{author}{{Smith}, N.} \emph{et~al.}
+\newblock \bibinfo{title}{{Discovery of Precursor Luminous Blue Variable
+  Outbursts in Two Recent Optical Transients: The Fitfully Variable Missing
+  Links UGC 2773-OT and SN 2009ip}}.
+\newblock \emph{\bibinfo{journal}{\aj}} \textbf{\bibinfo{volume}{139}},
+  \bibinfo{pages}{1451--1467} (\bibinfo{year}{2010}).
+
+\bibitem{Foley11}
+\bibinfo{author}{{Foley}, R.~J.} \emph{et~al.}
+\newblock \bibinfo{title}{{The Diversity of Massive Star Outbursts. I.
+  Observations of SN2009ip, UGC 2773 OT2009-1, and Their Progenitors \ifastroph
+  \else \ifsuppl \vspace{20in} \fi \fi }}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{732}},
+  \bibinfo{pages}{32} (\bibinfo{year}{2011}).
+
+\bibitem{Walborn02}
+\bibinfo{author}{{Walborn}, N.~R.}, \bibinfo{author}{{Danks}, A.~C.},
+  \bibinfo{author}{{Vieira}, G.} \& \bibinfo{author}{{Landsman}, W.~B.}
+\newblock \bibinfo{title}{{Space Telescope Imaging Spectrograph Observations of
+  High-Velocity Interstellar Absorption-Line Profiles in the Carina Nebula}}.
+\newblock \emph{\bibinfo{journal}{\apjs}} \textbf{\bibinfo{volume}{140}},
+  \bibinfo{pages}{407--456} (\bibinfo{year}{2002}).
+
+\bibitem{Couderc39}
+\bibinfo{author}{{Couderc}, P.}
+\newblock \bibinfo{title}{{Les aur{\'e}oles lumineuses des Novae}}.
+\newblock \emph{\bibinfo{journal}{Annales d'Astrophysique}}
+  \textbf{\bibinfo{volume}{2}}, \bibinfo{pages}{271} (\bibinfo{year}{1939}).
+
+\bibitem{Humphreys84}
+\bibinfo{author}{{Humphreys}, R.~M.} \& \bibinfo{author}{{McElroy}, D.~B.}
+\newblock \bibinfo{title}{{The initial mass function for massive stars in the
+  Galaxy and the Magellanic Clouds}}.
+\newblock \emph{\bibinfo{journal}{\apj}} \textbf{\bibinfo{volume}{284}},
+  \bibinfo{pages}{565--577} (\bibinfo{year}{1984}).
+
+\end{thebibliography}

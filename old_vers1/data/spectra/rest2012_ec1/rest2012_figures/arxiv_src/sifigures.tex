@@ -1,0 +1,116 @@
+
+%%%%%%%%%%%%% SI!!!! %%%%%%%%%%%%%%%
+\ifastroph
+   \setcounter{figure}{0}
+   \renewcommand{\thefigure}{S\arabic{figure}}
+\else
+  \ifsuppl
+     \setcounter{figure}{-4}
+  \fi
+\fi
+
+
+\fignature{3Dplot.jpg}{0.98}
+{3D-plot of the light path. North is toward
+the positive $y$-axis (up), east is toward the negative $x$-axis
+(left), and the positive $z$-axis points toward the observer with the
+origin at $\eta$~Car.  The red and brown circles indicate $\eta$~Car
+and scattering dust, respectively.  The parabolic relation between the
+spatial parameters of the scattering dust and the time since outburst
+is described by the well-known light echo equation\cite{Couderc39}:
+Assuming a time since outburst of 169 years, and a distance of 7660
+light-years\cite{Smith06}, we find that the scattering dust is at a
+position ($x$,$y$,$z$)=(14,-78,-66) in light-years.  
+%The $\eta$~Car to
+%light-echo cone apex distance, in light years, is half the interval of
+%time since the $\eta$~Car outburst. 
+The black lines show the path of
+the light scattering from the light-echo-producing dust
+concentrations.  The top-right panel shows an \textit{HST\/} image
+(credit: Nathan Smith / Jon Morse / NASA) of $\eta$~Car, which is
+surrounded by expanding lobes of gas denoted as the Homunculus Nebula
+visible to the NW and SE. These lobes were created by the 1838-1858
+Great Eruption. We indicate the lobes in the 3D plots with the two
+cones (Note that the size of the cones is not to scale).
+}
+{fig:3Dplot}
+
+\fignature{lines_3.pdf}{0.57}
+{  Spectral
+  type comparison. The stellar comparison spectra are convolved with a
+  Gaussian of FWHM 7~\AA\ so that their resolution matches those 
+  of \specMlo\ and \specDP. Similarly, we convolve
+  the spectrum \specMhi, which has an original resolution of 4\AA,
+  with a Gaussian of FWHM 5.7~\AA. We then divide the spectra by
+  the low-order continuum which we determine by convolving the spectra
+  with a Gaussian of FWHM 200~\AA. The upper left panel
+  compares two of the observed light echo
+  spectra to a selection of UVES supergiants\cite{Bagnulo03} in the 5060-5500~\AA\
+  wavelength range (We do not show spectrum \specMhi\ since its S/N
+  ratio in this blue wavelength range is too low).  The light echo
+  spectra correlate very well with late-F and G-type stars, in
+  particular the Mg~b lines, and the \ion{Ca}{I}, \ion{Fe}{I},
+  \ion{Ti}{I}, \ion{Cr}{I} blend at 5270~\AA. The upper right panel
+  shows the cross-correlation between the light echo and the UVES
+  spectra in the wavelength range of 5050-6500~\AA\  
+  as calculated by
+  the IRAF routine {\tt xcsao}.
+%
+%, and the \ion{Fe}{I},
+%  \ion{Ba}{I}, \ion{Ca}{I}, \ion{Mn}{I}, \ion{Co}{I},
+%  \ion{Ti}{I}~and~II, \ion{Ni}{I} blend at 6497~\AA (\specMlo\ has a
+%  chip gap at the 6497~\AA\ blend). The \ion{Na}{I}~D resonance
+%  doublet near 5890~\AA\ is prominent in both the echo and comparison
+%  spectra. Unfortunately, it suffers from contamination by the
+%  \ion{He}{I} $\lambda$5876 emission from the Carina Nebula at the
+%  blueward edge; extremely strong, multiple-component interstellar
+%  \ion{Na}{I}~D absorption within the Carina Nebula\cite{Walborn07};
+%  and residuals from night sky emission at the redward edge. 
+  Since the UVES spectra have a gap around the \ion{Ca}{II}
+  IR triplet, we use the \ion{Ca}{II} triplet spectral
+  library\cite{Cenarro01} in that wavelength range, as shown in the
+  bottom left panel.
+%In order to guard against biasing the continuum by the strong \ion{Ca}{II}
+%IR triplet lines, we disregard the wavelength ranges
+%8484-8505~\AA, 8520-8546~\AA, and 8643-8670~\AA\ when we compute the
+%continuum.  
+%  The bottom middle panel shows the correlation $r$
+%  between the light echo and the UVES spectra in the wavelength range
+%  of 5050-6500~\AA\ as calculated by the IRAF routine {\tt xcsao}. 
+%We cross-correlate each of our $\eta$~Car spectra with the supergiant
+%spectra library in Fourier space using the {\tt xcsao}\cite{Kurtz92}
+%IRAF task in order to determine which stellar type most strongly
+%correlates. Velocity shifts and dispersions are optimized for each
+%spectrum. An initial velocity guess of
+%$v_\mathrm{guess}=-250~\mathrm{km~s}^{-1}$ is provided, based on
+%visual inspection of the \ion{Ca}{II} triplet, and a velocity range of
+%$-350~\mathrm{km~s}^{-1}<v<-150~\mathrm{km~s}^{-1}$ is allowed for the
+%fit. Spectra are processed separately in the range $5050$~\AA$\ <
+%\lambda <6500$~\AA\ and in the range $8200$~\AA$\ < \lambda
+%<8720$~\AA, giving consistent results within the errorbars. The
+%\ion{Na}{I} D line region, $5860$~\AA$\ < \lambda < 5920$~\AA, and
+%$5890$~\AA$\ < \lambda <5866$~\AA, is removed, as these lines are
+%affected by ISM absorption, which contaminates the result. Together
+%with the velocity, a correlation parameter $r$ is determined.
+  The bottom right panel shows the blue-shifted velocity determined by {\tt
+  xcsao} from the \ion{Ca}{II} triplet with respect to the effective temperature\cite{Humphreys84}
+  of the supergiant template spectra. 
+  %For each supergiant type, we
+  %use the relation from\cite{Humphreys84} to determine the
+  %temperature.
+}
+{fig:speclines}
+
+\fignature{probdensity2.pdf}{0.63}
+{Effective temperature of the light echo spectrum.  The left panel
+shows the cross-correlation between the light echo and the UVES
+spectra as calculated by the IRAF routine {\tt xcsao} for \specMlo\
+(red squares) and \specDP\ (blue diamonds).  The lines indicate $r(T)$
+smoothed with a Gaussian of width $\sigma=300$~K, peaking at 5210~K
+and 4950~K for \specMlo\ (red) and \specDP\ (blue), respectively. The
+right panel shows the PDF of the best-correlating supergiant
+temperature, determined by bootstrap resampling the $r$ distribution
+$10^5$~times. The 95\% temperature confidence intervals are
+4850-5550~K and 4450-5400~K for \specMlo\ and \specDP, respectively.}
+{fig:pdf}
+

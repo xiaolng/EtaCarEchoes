@@ -1,0 +1,4 @@
+hd=34295
+spectral_type=A4 II
+teff=8800
+source=https://www.eso.org/sci/php/tools/uvespop/DATA/merged/hd34295.dat.gz

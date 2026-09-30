@@ -1,0 +1,10 @@
+Rest+2012 EC1 spectral typing
+Echo spectra: digitized from SI Fig.S2 (lines_3.pdf in arXiv:1112.2210 source)
+Templates: ESO UVES POP merged ASCII (Rest Table S2)
+Window: 5100-5400 A (Mg b / 5270), matching SI Fig.S2
+
+EC1B: Teff≈7312 K (~F3 Ia), 95% CI 3300-8887 K, (V-I)_0≈0.363
+EC1C: Teff≈7583 K (~F2 Iab), 95% CI 7468-8677 K, (V-I)_0≈0.316
+
+Rest+2012 published: G2-G5, ~5000 K (EC1B 4850-5550; EC1C 4450-5400).
+Caveat: figure digitization; prefer author-reduced 1D ASCII when available.
