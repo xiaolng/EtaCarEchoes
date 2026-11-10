@@ -1,0 +1,20 @@
+{
+  "source": "../dynesty_results_three_peak_convolution.pkl",
+  "sha256": "5670584e33e129d301562c1f3d25a284f714ce7368bde04e4ffcf4560d883f97",
+  "summary": "Maximum stored log-likelihood sample from Notebook 6 result; not a new fit",
+  "parameters": {
+    "A1": 0.3272241018086521,
+    "t0_1": 1837.5407846570276,
+    "tau_rise_1": 0.00025708370844413925,
+    "tau_fall_1": 0.5155401217764664,
+    "A2": 0.4882745862222516,
+    "t0_2": 1842.8535619942734,
+    "tau_rise_2": 0.00044202992991913646,
+    "tau_fall_2": 0.5251051028975539,
+    "A3": 2.1853097623532105,
+    "t0_3": 1844.7792609554012,
+    "tau_rise_3": 0.05999846298394002,
+    "tau_fall_3": 0.18478879657812353,
+    "sigma_gauss": 0.24326891629152478
+  }
+}
