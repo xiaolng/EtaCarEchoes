@@ -535,7 +535,7 @@ def reddening_ratio(filt_band, dEgi, k_dict):
 
 ### Fitting process for light curves using emcee
 def emcee_fit(dfs_dict, le_group, lc_keys=None, tmpl_key=None, LCmodels=None, 
-              peak_range=None, mod_peak_range=None, tmpl_peak_range=None, peak_filt=None, sel_filters=None,
+              peak_range=None, mod_peak_range=None, peak_filt=None, sel_filters=None,
               fixed_params=None, verbose=False, chain_sz=10000, return_samps=False, outputfile=None,
               fit_Rv=False, Rv_init=3.1, per_key_fit=False, tshift_i=None):
     '''
@@ -606,7 +606,7 @@ def emcee_fit(dfs_dict, le_group, lc_keys=None, tmpl_key=None, LCmodels=None,
     elif le_group is not None: sel_keys = getLC_grp(dfs=dfs_dict[filt_bands[0]], le_group=le_group)
     else: sel_keys = dfs_dict[filt_bands[0]].keys()
     sel_keys = [k for k in sel_keys if k != tmpl_key]
-
+    
     if peak_filt is None:
         peak_filt = filt_bands[0]
 
@@ -642,13 +642,12 @@ def emcee_fit(dfs_dict, le_group, lc_keys=None, tmpl_key=None, LCmodels=None,
     if le_group is not None: 
         dflag = 'g_ixs'
     elif le_group is None: 
-        dflag = 'sigma_clip'
+        dflag = 'sigmaclip'
 
     t_tmpl, f_tmpl, err_tmpl, peak_tmpl = {}, {}, {}, {}
     for fband in filt_bands:
         if tmpl_key is not None:
-            if isinstance(tmpl_peak_range, dict): peak_range1 = tmpl_peak_range[tmpl_key]
-            elif isinstance(peak_range, dict): peak_range1 = peak_range[tmpl_key]
+            if isinstance(peak_range, dict): peak_range1 = peak_range[tmpl_key]
             else: peak_range1 = peak_range
             t1, f1, err1, peak1 = getLC_vals(dfs_dict[fband], lc_key=tmpl_key, 
                                               peak_range=peak_range1, flag=dflag)
@@ -748,8 +747,6 @@ def emcee_fit(dfs_dict, le_group, lc_keys=None, tmpl_key=None, LCmodels=None,
     combined_res = {}
     samples_all = {}
 
-    if tshift_i is None: tshift_i = {}
-
     if per_key_fit:
         for ki, key in enumerate(sel_keys):
             if verbose:
@@ -759,10 +756,12 @@ def emcee_fit(dfs_dict, le_group, lc_keys=None, tmpl_key=None, LCmodels=None,
 
             # ----- Build parameter dict for this key -----
             tshift_tol = 730
-            if key not in tshift_i.keys():
-                tshift_init = peak_sci[peak_filt][key] - peak_tmpl[peak_filt]
-            else:
+            if isinstance(tshift_i, dict):
                 tshift_init = tshift_i[key]
+            elif tshift_i is not None:
+                tshift_init = tshift_i
+            else:
+                tshift_init = peak_sci[peak_filt][key] - peak_tmpl[peak_filt]
 
             all_params = {}
 
@@ -1235,8 +1234,11 @@ def get_combLCs(dfs_dict, fitparams_dict, LCmodels=None, flag='g_ixs'):
     if LCmodels is not None and not set(filt_bands) <= set(LCmodels.keys()):
         raise ValueError("dfs_dict must have same filters as LCmodels")
 
-    # Get tmpl_key to skip it
     tmpl_key = fitparams_dict.get('tmpl_key', None)
+    sel_keys = fitparams_dict['sel_keys']
+    if tmpl_key is not None:
+        tot_keys = np.concatenate([[tmpl_key], sel_keys])
+    else: tot_keys = sel_keys
 
     comb_dict = {}
     f_ps = fitparams_dict
@@ -1251,7 +1253,7 @@ def get_combLCs(dfs_dict, fitparams_dict, LCmodels=None, flag='g_ixs'):
         im_instrums = []
         fits_files = []
         
-        for key in natsorted(f_ps['sel_keys']):
+        for key in tot_keys:
             inds = getLC_inds(dfs, lc_key=key, flag=flag)
             t, f, err = getLC_vals(dfs, lc_key=key, flag=flag)
 
@@ -1299,3 +1301,58 @@ def get_combLCs(dfs_dict, fitparams_dict, LCmodels=None, flag='g_ixs'):
 
     return comb_dict
 
+
+def comb_dicts(dict_ls, labels=None):
+    combs_dict = {}
+    for fband in dict_ls[0].keys():
+        combs_dict[fband] = {}
+        for i, cb in enumerate(dict_ls):
+            if labels is None:
+                combs_dict[fband][f'seg{i+1}'] = cb[fband]
+            else:
+                combs_dict[fband][f'{labels[0]}'] = cb[fband]
+    return(combs_dict)
+
+
+
+def set_peak(findat_dict, finmod_dict, peak_filt='i', flag=None):
+    
+    t_i, f_i, err_i, peak_i = getLC_vals(dfs=finmod_dict[peak_filt], lc_key=None, peak_range='full', flag=flag)
+
+    for fband in findat_dict.keys():
+        df_dat = findat_dict[fband]
+        df_dat['phase'] = df_dat['mjd'] - peak_i
+
+        df_mod = finmod_dict[fband]
+        df_mod['phase'] = df_mod['mjd'] - peak_i
+        
+    return('Updated phase')
+
+
+def save_finaldata(fin_data, outputfile):
+    with pd.HDFStore(outputfile, mode='w') as store:
+        for key, df in fin_data.items():
+            store.put(key, df)
+    print(f"Saving to {outputfile}")
+
+def load_finaldata(filename, filt_key=None):
+    with pd.HDFStore(filename, mode='r') as store:
+        if filt_key is None:
+            table = {}
+            for key in list(store.keys()):
+                key = key.strip('/')
+                table[key] = store.get(key)
+        elif filt_key is not None:
+            table = store.get(filt_key)
+    return(table)
+
+
+def convert_muJy2mag(df, lc_key=None, flag=None):
+
+    t, f, err = getLC_vals(df, lc_key=lc_key, flag=flag)
+    wf = np.where(f <= 0, 1e-3, f)     # Replace negative values with small numbers (assuming those are non-detections)
+    
+    df['ABmag'] = 23.9 - (2.5 * np.log10(wf))     # AB magnitude conversion
+    df['ABmag_err'] = 1.086 * (err/wf)            # AB mag error of propagation
+    
+    return('AB mag calculated')
